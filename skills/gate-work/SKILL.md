@@ -1,0 +1,53 @@
+---
+name: gate-work
+description: This skill should be used when the user asks to "work the gate", "execute the gate", "run the gate", "work Q3", "run Q3", "do Q3", "execute Q3", "work through the gate", "gate work", "task me with the gate", "resume the gate", or mentions executing against an existing gate file, working through gate checkpoints, resuming a partially-completed gate, or validating against a gate document. Provides the gate execution methodology for working through an operator-authored validation plan.
+---
+
+# Gate Work — Gate Execution
+
+You are the executing agent. This skill loads a gate document into your context and you work through it directly. There is no subagent dispatch — you read the gate, adopt the framing below, and do the work.
+
+## Input
+
+The operator provides a gate reference: a Q-number (e.g., "Q3"), a filename (e.g., "Q3-gate.md"), or a path. Resolve to a `*-gate.md` file at the workspace root.
+
+## Step 1 — Resolve and Validate
+
+1. Resolve the gate file at the workspace root. If the file doesn't exist, stop and tell the operator.
+2. Read the gate file.
+3. Check for `## Gate Status: CLEARED`. If the gate is already cleared, tell the operator and stop. Do not re-execute a cleared gate without explicit confirmation.
+
+## Step 2 — Extract Context
+
+1. **Completion criteria**: The first paragraph after the `# Q{n} Gate:` title and before the first `## ` heading. This is what success means.
+2. **Dependencies**: The "Depends on:" line, if present. If the gate depends on an uncleared gate, warn the operator.
+3. **Queue context**: Read `QUEUE.md` at the workspace root. Find the matching Q-item for additional context on intent and scope. If no match, proceed without it — the gate file is self-contained.
+
+## Step 3 — Adopt Framing and Begin
+
+After completing Steps 1 and 2, adopt this operational context and begin working through the gate:
+
+The gate file is an operator-authored validation plan. You did not create it. It is not code you can compile or test in that manner. It is a structured set of checkpoints that must be satisfied through real work — executing commands, verifying outputs, producing artifacts, and confirming results.
+
+Your completion criteria: you must be able to claim the extracted completion criteria when done. Every checkpoint in the gate serves that claim. Work through them in order, respecting any stated dependencies between phases.
+
+**How to work the gate:**
+
+- Check off items as you complete them by changing `[ ]` to `[x]` in the gate file.
+- Produce the verification each checkpoint requires. If a checkpoint specifies a command, run it. If it specifies an observable outcome, confirm it and document the result.
+- If a checkpoint cannot be completed, do not mark it `[x]`. Explain what blocked it and continue with unblocked checkpoints. The operator will decide how to proceed.
+- If a checkpoint should be bypassed, mark it `[~]` and document the justification inline. Bypasses are decisions — they require reasoning.
+- If you discover issues with the gate document itself (wrong assumptions, filename mismatches, spec-vs-reality divergences), document them under a `## Gate Errata` section at the end.
+- When all checkpoints are complete (or accounted for via bypass), add a `## Gate Status: CLEARED` section with the validation date and a summary sentence stating what was proven. Then move the cleared gate file from the workspace root to `gates/` (create the directory if it doesn't exist). However, if all checkpoints are blocked or bypassed with none actually completed, the gate has not been cleared. Report the situation to the operator — do not write a CLEARED status for a gate where nothing was validated.
+
+The operator is here to assist you, not as a crutch. You may work toward the completion criteria in whatever way you deem appropriate. If you are blocked and cannot unblock yourself, ask. Otherwise, proceed.
+
+## Related Skills
+
+- **gate-plan** — Authors a gate document. Plan creates the gate; work executes it.
+- **gate-review** — Audits a gate document against the quality bar. Review sits between plan and work in the lifecycle.
+- **prime** — Session context loading. Prime and gate-work are independent — prime loads context, gate-work frames execution against an existing gate.
+
+## Reference Files
+
+- **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md`** — Gate document conventions: section ordering (phases, errata, notes, status), checkpoint ID format, bypass markers, and verification method placement.

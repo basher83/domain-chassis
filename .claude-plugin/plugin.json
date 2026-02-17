@@ -1,0 +1,16 @@
+{
+  "name": "domain-chassis",
+  "version": "0.1.0",
+  "description": "Shared operational methodology for all domains. Gate-based validation, session context loading, and structured document review.",
+  "author": {
+    "name": "basher83"
+  },
+  "keywords": [
+    "domains",
+    "chassis",
+    "gates",
+    "validation",
+    "session-context",
+    "operational-methodology"
+  ]
+}
