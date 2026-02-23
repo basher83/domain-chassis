@@ -19,7 +19,7 @@ If multiple doctrine files are found, warn the operator — a workspace should b
 
 Read `PIN.md` at the workspace root — the project index tracking what's here and what state it's in. If PIN.md does not exist, note its absence and skip.
 
-Validate PIN.md against the workspace standard (`references/workspace-standard.md`). Flag stale status values, missing rows for repos on disk, or repos on disk without PIN.md entries. Don't block on these — report them as part of the summary.
+List the subdirectories in the workspace root to cross-reference against PIN.md entries. Exclude `gates/` — that's the gate archive, not a project. Validate PIN.md against the workspace standard (`references/workspace-standard.md`). Flag stale status values, PIN.md entries without a directory on disk, or directories on disk without PIN.md entries. Don't block on these — report them as part of the summary.
 
 ### Step 3 — Load Queue
 

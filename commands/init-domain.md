@@ -1,15 +1,14 @@
 ---
-name: init-domain
 description: Scaffold a new domain workspace with the common chassis files
-arguments:
-  - name: domain
-    description: "Domain name (e.g., workshop, lab, research, forge)"
-    required: true
+argument-hint: [domain]
+allowed-tools: Bash, Glob, Read, Write
 ---
 
 # Init Domain
 
 Scaffold the common chassis for a new domain workspace. Creates the four required files and the gates directory at the current working directory.
+
+**Resolve the domain name**: use the `domain` argument if provided; otherwise infer it from the current working directory name (e.g., `workshop` from `/dev/workshop`).
 
 **Before creating anything**, check what already exists. If any of the target files are already present, list them and stop. Do not overwrite existing chassis files without explicit confirmation.
 
