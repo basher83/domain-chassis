@@ -35,10 +35,15 @@ Your completion criteria: you must be able to claim the extracted completion cri
 
 - Check off items as you complete them by changing `[ ]` to `[x]` in the gate file.
 - Produce the verification each checkpoint requires. If a checkpoint specifies a command, run it. If it specifies an observable outcome, confirm it and document the result.
+- Document artifact evidence inline for every checkpoint you complete. When you mark a checkpoint `[x]`, the gate file must contain the concrete evidence that proves it — command output, file contents, counts, or results quoted directly below the checkpoint. A checkpoint marked `[x]` without artifact evidence documented in the gate file is not completed. Either produce the evidence or leave the checkpoint unchecked.
 - If a checkpoint cannot be completed, do not mark it `[x]`. Explain what blocked it and continue with unblocked checkpoints. The operator will decide how to proceed.
 - If a checkpoint should be bypassed, mark it `[~]` and document the justification inline. Bypasses are decisions — they require reasoning.
 - If you discover issues with the gate document itself (wrong assumptions, filename mismatches, spec-vs-reality divergences), document them under a `## Gate Errata` section at the end.
-- When all checkpoints are complete (or accounted for via bypass), add a `## Gate Status: CLEARED` section with the validation date and a summary sentence stating what was proven. Then move the cleared gate file from the workspace root to `gates/` (create the directory if it doesn't exist). However, if all checkpoints are blocked or bypassed with none actually completed, the gate has not been cleared. Report the situation to the operator — do not write a CLEARED status for a gate where nothing was validated.
+- **Pre-clear detector.** Before writing `## Gate Status: CLEARED`, verify all three conditions. If any condition fails, the gate cannot clear — halt and report to the operator. This is fail-closed: ambiguity on any condition is a halt, not a pass.
+  1. At least one checkpoint is marked `[x]` (not all bypassed, deferred, or blocked).
+  2. Every checkpoint marked `[x]` has artifact evidence documented inline in the gate file (no prose-only completions).
+  3. A `## Gate Review` section exists in the gate document with `Verdict: PASS`, confirming the gate was reviewed and found adequate for execution. A missing review section or `Verdict: FAIL` blocks clearance.
+- When the pre-clear detector passes, add a `## Gate Status: CLEARED` section with the validation date and a summary sentence stating what was proven. Then move the cleared gate file from the workspace root to `gates/` (create the directory if it doesn't exist).
 
 The operator is here to assist you, not as a crutch. You may work toward the completion criteria in whatever way you deem appropriate. If you are blocked and cannot unblock yourself, ask. Otherwise, proceed.
 

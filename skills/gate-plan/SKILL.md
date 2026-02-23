@@ -39,7 +39,9 @@ Write the gate document. Apply these quality requirements:
 
 **Completion criteria must be claimable.** The first paragraph states what the operator can claim when the gate clears. "Validate the system" is vague. "Targeted extraction across 5 implementations to understand how different engineers solve X" is claimable — it names the scope, the method, and what understanding is produced. A practitioner should read the completion criteria and know exactly what was proven.
 
-**Every checkpoint must produce a positive artifact.** A passing checkpoint must leave evidence that it passed. Command output to quote, a file that exists, a document with specific content, a count that matches an expectation. If a checkpoint can pass when nothing happens — no output, no artifact, silent success — it's proving a negative. Design checkpoints that succeed visibly, not ones that pass by default.
+**Every checkpoint must produce a positive artifact.** A passing checkpoint must leave evidence that it passed. Command output to quote, a file that exists, a document with specific content, a count that matches an expectation. If a checkpoint can pass when nothing happens — no output, no artifact, silent success — it's proving a negative. Design checkpoints that succeed visibly, not ones that pass by default. This is a hard requirement: a checkpoint without a defined verification artifact is a blocking deficiency in the self-assessment (Step 4), not a suggestion to improve.
+
+**Every checkpoint must be categorized as structural or operational.** Use the `[structural]` or `[operational]` tag after the checkpoint ID as defined in the gate template. Structural checkpoints verify existence or form — file present, format valid, command succeeds. Operational checkpoints verify that the deliverable produces meaningful results — pipeline generates output, tool processes real input, integration completes a cycle. Preflight gates must include at least one `[operational]` checkpoint. A preflight gate with only structural checkpoints has direct Vacuous Green exposure and must not be presented — it fails the self-assessment in Step 4.
 
 **Verification must exercise what it claims to validate.** If a checkpoint says "study document produced," the verification must confirm the document exists and contains the expected sections — not just that the command exited cleanly. If a checkpoint says "all 5 repos on disk," the verification lists them. Don't write a checkpoint that could pass without the thing it validates actually being true.
 
@@ -62,6 +64,7 @@ Before showing the draft to the operator, evaluate it:
 3. Are all ordering dependencies between checkpoints and phases documented?
 4. Could an agent execute this gate top-to-bottom without the operator having to clarify sequencing, prerequisites, or intent?
 5. Is the checkpoint granularity appropriate — detailed enough to be unambiguous, not so granular that it's micromanagement?
+6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
 
 If the answer to any of these is no, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
 

@@ -44,7 +44,11 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Completion criteria must be claimable.** Can a practitioner read the first paragraph and know exactly what was proven? Does it name the scope, method, and deliverable? Or is it vague enough to mean different things to different readers?
 
-**Every checkpoint must produce a positive artifact.** Walk each checkpoint. Does it leave evidence when it passes — output to quote, a file that exists, a count that matches? Flag any checkpoint that could pass silently or proves a negative (absence of errors, no failures, clean exit without observable output).
+**Every checkpoint must produce a positive artifact.** Walk each checkpoint. Does it leave evidence when it passes — output to quote, a file that exists, a count that matches? Flag any checkpoint that could pass silently or proves a negative (absence of errors, no failures, clean exit without observable output). A checkpoint without a defined verification artifact is a blocking deficiency, not a minor finding.
+
+**Checkpoint categories must be declared.** Check whether every checkpoint uses the `[structural]` or `[operational]` tag after the checkpoint ID. Flag any checkpoint without a category tag. For preflight gates, verify at least one `[operational]` checkpoint exists — a preflight gate with only structural checkpoints is a finding at the highest priority, as it has direct Vacuous Green exposure (can clear without proving the deliverable works).
+
+**Pre-clear conditions must pass prospectively.** Evaluate whether the pre-clear detector conditions from gate-work would pass if this gate were executed and all checkpoints cleared as written: (1) would at least one checkpoint be genuinely completed, not all bypassed? (2) would every completed checkpoint have artifact evidence defined? (3) is there a provision for gate review? This catches gates that would fail the pre-clear detector before they reach execution.
 
 **Verification must exercise what it claims to validate.** For each checkpoint with a verification method, check: does the verification actually prove the checkpoint's claim? A header count doesn't prove the right headers exist. A file existence check doesn't prove the file has the right content. Flag verifications that could pass without the validated thing being true.
 
@@ -60,13 +64,14 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 ## Step 4 — Self-Assessment Questions
 
-Apply the five questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
+Apply the six questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
 
 1. If every checkpoint were cleared, does that fully justify the completion criteria? Are there gaps — things the first paragraph claims that no checkpoint validates?
 2. Does every checkpoint produce a positive, observable verification? Any that prove negatives or could pass silently?
 3. Are all ordering dependencies documented?
 4. Could an agent execute this gate top-to-bottom without the operator clarifying sequencing, prerequisites, or intent?
 5. Is checkpoint granularity appropriate — unambiguous but not micromanaged?
+6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
 
 Report each question's answer with specific evidence from the gate.
 
@@ -80,11 +85,15 @@ Summarize the review. Structure:
 
 **Quality findings:** Each quality requirement that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section.
 
-**Self-assessment gaps:** Any of the five questions that answered "no," with evidence.
+**Self-assessment gaps:** Any of the six questions that answered "no," with evidence.
 
 **Strengths:** What the gate does well. A review that only reports problems misses the chance to reinforce good patterns.
 
 The operator reads the findings and decides what to fix. The review does not propose rewrites, suggest alternative checkpoints, or offer to regenerate the gate. That's the operator's work or a subsequent gate-plan invocation.
+
+After presenting findings to the operator, append a `## Gate Review` section to the gate document. This records the review outcome and is required by gate-work's pre-clear detector.
+
+The section contains: a `Reviewed:` date line, a `Verdict:` line (PASS or FAIL), and a one-sentence summary. Verdict is PASS when the confidence assessment is 4/5 or above and no blocking deficiencies were found. Otherwise FAIL, with the primary blocking finding stated. Gate-work's pre-clear detector requires `Verdict: PASS` to clear the gate — a FAIL verdict blocks clearance until the gate is revised and re-reviewed.
 
 ## Related Skills
 

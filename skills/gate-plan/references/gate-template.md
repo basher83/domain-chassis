@@ -13,11 +13,12 @@ Depends on: {Q-references to prior gates, or "None"}
 
 ## Phase 1: {name}
 
-- [ ] **{ID}** {checkpoint description}
+- [ ] **{ID}** `[structural]` {checkpoint description}
 
 {Verification method — code block, command, or specific observable outcome}
+{Artifact evidence — concrete output, file, or result that proves this checkpoint passed}
 
-- [ ] **{ID}** {checkpoint description}
+- [ ] **{ID}** `[operational]` {checkpoint description}
 
 ## Phase 2: {name}
 
@@ -48,6 +49,15 @@ Depends on: {Q-references to prior gates, or "None"}
 
 **Bypass marker**: `[~]` instead of `[ ]` or `[x]`. Used when a checkpoint is deliberately skipped. Justification must appear inline — a bypass without reasoning is a gap, not a decision.
 
+**Checkpoint categories**: Every checkpoint is categorized as `[structural]` or `[operational]`. The category tag appears inline after the checkpoint ID, wrapped in backticks.
+
+- `[structural]` — Verifies that something exists or is correctly formed: file present, command succeeds, format valid, dependency installed. Necessary but not sufficient for proving a deliverable works.
+- `[operational]` — Verifies that the deliverable produces meaningful results on first use: pipeline generates discriminating output, tool processes real input, integration completes an end-to-end cycle. Proves the thing works, not just that it's assembled.
+
+Preflight gates must include at least one `[operational]` checkpoint. A preflight gate with only structural checkpoints can clear without proving the deliverable works — this is a Vacuous Green vector. For projects with external runtime dependencies (test fixtures, sample data, API access), fixture presence or a documented acquisition plan is itself a gating requirement, not deferred work.
+
+**Artifact evidence**: Every checkpoint must define what positive artifact proves it passed. A positive artifact is concrete, quotable evidence: command output, file contents, test counts, grep results, or equivalent observable output. Prose-only claims ("verified that X works," "confirmed it runs correctly") are not artifact evidence. A checkpoint without a defined artifact is unverifiable and must be redesigned.
+
 ## Sections Added During or After Execution
 
 These are not part of the initial gate template. They emerge during the work.
@@ -55,5 +65,7 @@ These are not part of the initial gate template. They emerge during the work.
 **Gate Errata**: Issues found in the gate document itself during execution — wrong assumptions, filename mismatches, spec-vs-reality divergences. Captured so the operator can improve future gates.
 
 **Notes**: Edge cases, observations, and context discovered during execution that don't fit into checkpoints.
+
+**Gate Review**: Added by gate-review after auditing the document. Contains a `Reviewed:` date, a `Verdict:` (PASS or FAIL), and a summary. Gate-work's pre-clear detector requires this section with `Verdict: PASS` before the gate can clear.
 
 **Gate Status**: Added when the gate clears. Format: `## Gate Status: CLEARED` followed by validation date and a summary sentence stating what was proven.
