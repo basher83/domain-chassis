@@ -1,16 +1,39 @@
-# domain-chassis skills
+# domain-chassis
 
-Shared operational methodology for all domains. Five skills covering the gate validation lifecycle, session context loading, and structured document review.
+Shared operational methodology for all domains. Gate validation lifecycle, session context loading, structured document review, and operational retrospectives.
 
 ## Skills
 
 | Skill | Purpose | Lifecycle Role |
 |-------|---------|----------------|
+| aar | After-action review of a completed work session | Writes AAR to domain knowledge repo |
 | gate-plan | Author a gate document from a QUEUE.md item | Creates Q{n}-gate.md |
-| gate-review | Audit a gate document against the quality bar | Produces findings, no file writes |
+| gate-review | Audit a gate document against the quality bar | Produces findings, appends Gate Review verdict to gate document |
 | gate-work | Execute a gate document checkpoint by checkpoint | Edits Q{n}-gate.md in place, moves to gates/ on clear |
 | prime | Load doctrine, PIN, queue, and triage state | Read-only summary |
+| skill-creator | Create, improve, and evaluate skills | Creates/edits SKILL.md files |
 | spec-review | Multi-round structured document review via subagent | Produces findings, no file writes |
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| init-domain | Scaffold a new domain workspace with the four chassis files and gates directory |
+
+## References
+
+| File | Purpose |
+|------|---------|
+| anti-pattern-registry.md | Catalog of identified anti-patterns across the gate and operational methodology |
+| triage-format.md | Triage intake formatting conventions |
+| WELCOME.md | System orientation for agents entering a domain workspace |
+
+## Templates
+
+| File | Purpose |
+|------|---------|
+| ADR-template.md | Architecture Decision Record format |
+| Proposal-template.md | Options evaluation and decision proposal format |
 
 ## File Operation Model
 
@@ -31,7 +54,7 @@ Files read from workspace root:
 
 Files written to workspace root:
 
-- `Q{n}-gate.md` — gate-plan creates, gate-work edits in place
+- `Q{n}-gate.md` — gate-plan creates, gate-work edits in place, gate-review appends Gate Review verdict
 - `gates/Q{n}-gate.md` — gate-work moves cleared gates here (creates directory if needed)
 
 No skill writes to the plugin directory. The plugin is read-only at runtime.
