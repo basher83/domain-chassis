@@ -55,6 +55,8 @@ Write the gate document. Apply these quality requirements:
 
 **Scope out explicitly.** If something is deliberately not covered, it belongs in the Excluded section with a reason. This prevents an executing agent from scope-creeping into adjacent validation and prevents the operator from wondering why something was missed.
 
+**Multi-vector gates require a coverage matrix.** When a gate targets remediations across multiple vectors and multiple lifecycle stages, the gate document must include a coverage matrix mapping every identified vector (rows) to every applicable lifecycle stage (columns), with the enforcement mechanism named in each cell. Empty cells are gaps — they represent vector-stage combinations where no enforcement exists. All empty cells must be addressed (filled with a mechanism or explicitly scoped out with justification) before the gate is presented. This requirement applies only to gates that cross both multiple vectors and multiple lifecycle stages; single-vector or single-stage gates are not required to produce a matrix.
+
 ### Step 4 — Self-Assess Before Presenting
 
 Before showing the draft to the operator, evaluate it:
@@ -65,6 +67,7 @@ Before showing the draft to the operator, evaluate it:
 4. Could an agent execute this gate top-to-bottom without the operator having to clarify sequencing, prerequisites, or intent?
 5. Is the checkpoint granularity appropriate — detailed enough to be unambiguous, not so granular that it's micromanagement?
 6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
+7. If the gate targets multiple vectors across lifecycle stages, does it include a coverage matrix with zero empty cells?
 
 If the answer to any of these is no, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
 

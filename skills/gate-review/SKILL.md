@@ -62,9 +62,11 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Scope out explicitly.** Is there an Excluded section? Does it name what the gate deliberately does not cover and why? Missing exclusions leave the executing agent guessing about boundaries.
 
+**Coverage matrix completeness (conditional).** If the gate targets remediations across multiple vectors and multiple lifecycle stages, it must include a coverage matrix. Evaluate three aspects: (1) matrix completeness — every vector-stage cell contains a named enforcement mechanism or an explicit scope-out justification, with no empty cells; (2) mechanism-to-vector alignment — each named mechanism actually closes the vector it claims to at the lifecycle stage where it appears; (3) conditional applicability — the matrix is present when the gate crosses multiple vectors and lifecycle stages, and absent when the gate is single-vector or single-stage (presence in a single-scope gate is not a finding, but absence in a multi-vector gate is). A missing matrix in a multi-vector gate is a blocking deficiency.
+
 ## Step 4 — Self-Assessment Questions
 
-Apply the six questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
+Apply the seven questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
 
 1. If every checkpoint were cleared, does that fully justify the completion criteria? Are there gaps — things the first paragraph claims that no checkpoint validates?
 2. Does every checkpoint produce a positive, observable verification? Any that prove negatives or could pass silently?
@@ -72,6 +74,7 @@ Apply the six questions from gate-plan Step 4 to the gate as if you were the aut
 4. Could an agent execute this gate top-to-bottom without the operator clarifying sequencing, prerequisites, or intent?
 5. Is checkpoint granularity appropriate — unambiguous but not micromanaged?
 6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
+7. If the gate targets multiple vectors across lifecycle stages, does it include a coverage matrix with zero empty cells?
 
 Report each question's answer with specific evidence from the gate.
 
@@ -85,7 +88,7 @@ Summarize the review. Structure:
 
 **Quality findings:** Each quality requirement that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section.
 
-**Self-assessment gaps:** Any of the six questions that answered "no," with evidence.
+**Self-assessment gaps:** Any of the seven questions that answered "no," with evidence.
 
 **Strengths:** What the gate does well. A review that only reports problems misses the chance to reinforce good patterns.
 
