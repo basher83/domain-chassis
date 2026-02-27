@@ -1,0 +1,31 @@
+{
+  "name": "domain-chassis",
+  "owner": {
+    "name": "basher83",
+    "email": "basher83@mail.spaceships.work"
+  },
+  "metadata": {
+    "description": "Shared operational methodology for all domains. Gate-based validation, session context loading, and structured document review.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "domain-chassis",
+      "source": ".",
+      "description": "Shared operational methodology for all domains. Gate-based validation, session context loading, and structured document review.",
+      "version": "0.1.4",
+      "category": "methodology",
+      "keywords": [
+        "domains",
+        "chassis",
+        "gates",
+        "validation",
+        "session-context",
+        "operational-methodology"
+      ],
+      "author": {
+        "name": "basher83"
+      }
+    }
+  ]
+}
