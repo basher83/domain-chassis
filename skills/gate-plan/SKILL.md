@@ -57,6 +57,8 @@ Write the gate document. Apply these quality requirements:
 
 **Multi-vector gates require a coverage matrix.** When a gate targets remediations across multiple vectors and multiple lifecycle stages, the gate document must include a coverage matrix mapping every identified vector (rows) to every applicable lifecycle stage (columns), with the enforcement mechanism named in each cell. Empty cells are gaps — they represent vector-stage combinations where no enforcement exists. All empty cells must be addressed (filled with a mechanism or explicitly scoped out with justification) before the gate is presented. This requirement applies only to gates that cross both multiple vectors and multiple lifecycle stages; single-vector or single-stage gates are not required to produce a matrix.
 
+**Cross-domain reachability requires a delivery checkpoint.** When a gate modifies artifacts consumed external to the current domain, the gate must include at least one checkpoint verifying the changes are reachable to that domain. "External to the current domain" means the artifact's consumer operates in a different domain than where the gate executes — a chassis skill modified in Workshop but consumed by Forge agents, a vault artifact produced in Research but referenced in Lab. The checkpoint must verify reachability through the actual distribution path (plugin cache version, vault file presence, deployed configuration), not just source-level correctness (repo commit, file content). A gate that validates source changes without verifying consumer reachability has proven correctness but not delivery. This requirement applies only to gates modifying cross-domain artifacts; gates whose artifacts are consumed entirely within the authoring domain are not required to include a delivery checkpoint.
+
 ### Step 4 — Self-Assess Before Presenting
 
 Before showing the draft to the operator, evaluate it:
@@ -68,6 +70,7 @@ Before showing the draft to the operator, evaluate it:
 5. Is the checkpoint granularity appropriate — detailed enough to be unambiguous, not so granular that it's micromanagement?
 6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
 7. If the gate targets multiple vectors across lifecycle stages, does it include a coverage matrix with zero empty cells?
+8. If the gate modifies artifacts consumed external to the current domain, does it include a checkpoint verifying consumer reachability?
 
 If the answer to any of these is no, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
 
