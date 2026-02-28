@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "domain-chassis",
-      "source": ".",
+      "source": "./",
       "description": "Shared operational methodology for all domains. Gate-based validation, session context loading, and structured document review.",
       "version": "0.1.4",
       "category": "methodology",
