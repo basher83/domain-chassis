@@ -13,7 +13,7 @@
       "name": "domain-chassis",
       "source": "./",
       "description": "Shared operational methodology for all domains. Gate-based validation, session context loading, and structured document review.",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "category": "methodology",
       "keywords": [
         "domains",
