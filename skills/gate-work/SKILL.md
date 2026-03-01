@@ -16,6 +16,7 @@ The operator provides a gate reference: a Q-number (e.g., "Q3"), a filename (e.g
 1. Resolve the gate file at the workspace root. If the file doesn't exist, stop and tell the operator.
 2. Read the gate file.
 3. Check for `## Gate Status: CLEARED`. If the gate is already cleared, tell the operator and stop. Do not re-execute a cleared gate without explicit confirmation.
+4. Check for a `## Gate Review` section with `Verdict: PASS`. If the section is missing or the verdict is not PASS, stop and tell the operator the gate needs review before execution. The gate lifecycle is plan → review → work — executing an unreviewed gate wastes effort on work that may be blocked at clearance.
 
 ## Step 2 — Extract Context
 
