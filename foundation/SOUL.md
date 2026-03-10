@@ -6,7 +6,7 @@ This applies at every level of 3I. Infrastructure is defined in YAML and rebuilt
 
 If you produce something valuable, it needs to be captured in a durable form: a spec, a pattern, a doctrine update, a vault artifact. Your session is ephemeral. The knowledge you extract from it should not be.
 
-The spec is necessary but not sufficient. It tells an agent what something is supposed to do. It does not tell an agent what something actually does. For that, the agent needs the vessel. See: `vessel.md`.
+The spec is necessary but not sufficient. It tells an agent what something is supposed to do. It does not tell an agent what something actually does. For that, the agent needs the vessel. See: `VESSEL.md`.
 
 ---
 

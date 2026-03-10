@@ -20,20 +20,36 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 |---------|---------|
 | init-domain | Scaffold a new domain workspace with the four chassis files and gates directory |
 
+## Foundation
+
+| File | Purpose |
+|------|---------|
+| SOUL.md | Foundational principle: specs are the soul, implementations are disposable |
+| VESSEL.md | Foundational principle: the source is the vessel, source is ground truth |
+| WELCOME.md | System orientation for agents entering a domain workspace |
+
 ## References
 
 | File | Purpose |
 |------|---------|
 | anti-pattern-registry.md | Catalog of identified anti-patterns across the gate and operational methodology |
-| triage-format.md | Triage intake formatting conventions |
-| WELCOME.md | System orientation for agents entering a domain workspace |
+| blueprint-standard.md | Normative standard defining the blueprint artifact class |
 
 ## Templates
 
 | File | Purpose |
 |------|---------|
 | ADR-template.md | Architecture Decision Record format |
+| blueprint-template.md | Blueprint document scaffold |
 | Proposal-template.md | Options evaluation and decision proposal format |
+| triage-format.md | Triage intake formatting conventions |
+
+## Blueprints
+
+| File | Purpose |
+|------|---------|
+| BLUEPRINT.md | Index of architecture blueprints for the chassis |
+| B1-chassis-architecture.md | Chassis architecture: current state, component interactions, artifact lifecycle, governance |
 
 ## File Operation Model
 
