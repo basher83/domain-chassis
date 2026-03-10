@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a761f32fffc8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "README.md",
+    "blueprints/B1-chassis-architecture.md",
+    "blueprints/BLUEPRINT.md",
+    "foundation/SOUL.md",
+    "foundation/VESSEL.md",
+    "foundation/WELCOME.md",
+    "references/WELCOME.md",
+    "references/soul.md",
+    "references/triage-format.md",
+    "references/vessel.md",
+    "skills/skill-creator/referances/benchmark-mode.md",
+    "skills/skill-creator/referances/eval-mode.md",
+    "skills/skill-creator/referances/mode-diagrams.md",
+    "skills/skill-creator/referances/schemas.md",
+    "skills/skill-creator/references/benchmark-mode.md",
+    "skills/skill-creator/references/eval-mode.md",
+    "skills/skill-creator/references/mode-diagrams.md",
+    "skills/skill-creator/references/schemas.md",
+    "templates/triage-format.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a7/61f32fffc8/0/metadata.json",
+      "transcript": "/a7/61f32fffc8/0/full.jsonl",
+      "content_hash": "/a7/61f32fffc8/0/content_hash.txt",
+      "prompt": "/a7/61f32fffc8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 74,
+    "cache_creation_tokens": 16207,
+    "cache_read_tokens": 99212,
+    "output_tokens": 2968,
+    "api_call_count": 9
+  }
+}

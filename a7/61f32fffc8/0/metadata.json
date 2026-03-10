@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "a761f32fffc8",
+  "session_id": "1171b167-7b4d-4f18-8b21-8cce74a24340",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-10T20:57:07.008902Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "blueprints/BLUEPRINT.md",
+    "foundation/WELCOME.md",
+    "skills/skill-creator/referances/mode-diagrams.md",
+    "README.md",
+    "foundation/SOUL.md",
+    "foundation/VESSEL.md",
+    "references/soul.md",
+    "references/vessel.md",
+    "skills/skill-creator/referances/benchmark-mode.md",
+    "skills/skill-creator/references/benchmark-mode.md",
+    "templates/triage-format.md",
+    "blueprints/B1-chassis-architecture.md",
+    "references/WELCOME.md",
+    "references/triage-format.md",
+    "skills/skill-creator/referances/eval-mode.md",
+    "skills/skill-creator/referances/schemas.md",
+    "skills/skill-creator/references/mode-diagrams.md",
+    "skills/skill-creator/references/eval-mode.md",
+    "skills/skill-creator/references/schemas.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-haiku-4-5-20251001",
+  "turn_id": "f2accb918d4d",
+  "token_usage": {
+    "input_tokens": 74,
+    "cache_creation_tokens": 16207,
+    "cache_read_tokens": 99212,
+    "output_tokens": 2968,
+    "api_call_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-10T20:57:06.977958Z",
+    "agent_lines": 1549,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1549,
+    "agent_percentage": 100
+  }
+}
