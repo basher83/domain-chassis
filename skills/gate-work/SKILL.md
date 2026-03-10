@@ -23,6 +23,7 @@ The operator provides a gate reference: a Q-number (e.g., "Q3"), a filename (e.g
 1. **Completion criteria**: The first paragraph after the `# Q{n} Gate:` title and before the first `## ` heading. This is what success means.
 2. **Dependencies**: The "Depends on:" line, if present. If the gate depends on an uncleared gate, warn the operator.
 3. **Queue context**: Read `QUEUE.md` at the workspace root. Find the matching Q-item for additional context on intent and scope. If no match, proceed without it — the gate file is self-contained.
+4. **Anti-pattern registry**: Read `${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md`. When a checkpoint carries an anti-pattern tag (`` `{AP-nn}` ``), understand what failure mode that checkpoint guards against — this informs verification rigor. A checkpoint tagged `{AP-07}` (Vacuous Green) means verification must produce substantive evidence, not just confirm structural existence. A checkpoint tagged `{AP-10}` (Recursive Defect) means the verification itself should be audited for the defect class being checked. The tag is a signal, not a procedure — use judgment on how the anti-pattern awareness shapes verification depth.
 
 ## Step 3 — Adopt Framing and Begin
 
@@ -63,4 +64,5 @@ The operator is here to assist you, not as a crutch. You may work toward the com
 
 ## Reference Files
 
-- **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md`** — Gate document conventions: section ordering (phases, errata, notes, status), checkpoint ID format, bypass markers, and verification method placement.
+- **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md`** — Gate document conventions: section ordering (phases, errata, notes, status), checkpoint ID format, bypass markers, anti-pattern tags, and verification method placement.
+- **`${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md`** — Named failure modes catalog. Read during Step 2 to understand what failure modes tagged checkpoints guard against, informing verification rigor.

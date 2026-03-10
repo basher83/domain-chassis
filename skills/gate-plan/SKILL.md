@@ -24,6 +24,8 @@ The operator provides a Q-number (e.g., "Q4", "4"). This maps to a row in QUEUE.
 
 Read existing `*-gate.md` files at the workspace root and in `gates/` (if more than 3 exist total, focus on the 2-3 with the highest Q-numbers). Active gates live at the workspace root; cleared gates are archived in `gates/`. Both are valid pattern references. The gate template (`references/gate-template.md`) defines the structural standard. The existing gates show how that standard is applied in practice.
 
+Read the anti-pattern registry (`${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md`). The registry catalogs named failure modes with scope, detection, and prevention fields. During drafting (Step 3), you will identify checkpoints that guard against these anti-patterns and tag them using the convention defined in gate-template.md.
+
 Pay attention to:
 
 - How completion criteria are stated (first paragraph — concrete, claimable, specific)
@@ -61,6 +63,8 @@ Write the gate document. Apply these quality requirements:
 
 **Cross-domain reachability requires a delivery checkpoint.** When a gate modifies artifacts consumed external to the current domain, the gate must include at least one checkpoint verifying the changes are reachable to that domain. "External to the current domain" means the artifact's consumer operates in a different domain than where the gate executes — a chassis skill modified in Workshop but consumed by Forge agents, a vault artifact produced in Research but referenced in Lab. The checkpoint must verify reachability through the actual distribution path (plugin cache version, vault file presence, deployed configuration), not just source-level correctness (repo commit, file content). A gate that validates source changes without verifying consumer reachability has proven correctness but not delivery. This requirement applies only to gates modifying cross-domain artifacts; gates whose artifacts are consumed entirely within the authoring domain are not required to include a delivery checkpoint. When the distribution path requires operator action or depends on platform mechanics outside the gate agent's control (e.g., plugin cache refresh, manual deployment), the gate may scope out delivery verification in the Excluded section with reasoning that names what the agent cannot control and why the in-scope checkpoints already cover correctness. This is a valid resolution, not a blocking deficiency.
 
+**Tag checkpoints that guard against known anti-patterns.** After drafting checkpoints, review them against the anti-pattern registry read in Step 2. Identify checkpoints where a genuine guarding relationship exists — the checkpoint prevents or detects the failure mode described by a registry entry. Apply the `{AP-nn}` tag convention from gate-template.md to those checkpoints. Tags are applied selectively: not every checkpoint needs a tag, and forcing tags where no anti-pattern applies degrades the signal. A checkpoint that prevents Vacuous Green (AP-07) gets tagged; a checkpoint that validates file formatting with no anti-pattern relevance does not.
+
 ### Step 4 — Self-Assess Before Presenting
 
 Before showing the draft to the operator, evaluate it:
@@ -74,6 +78,7 @@ Before showing the draft to the operator, evaluate it:
 7. If the gate targets multiple vectors across lifecycle stages, does it include a coverage matrix with zero empty cells?
 8. If the gate modifies artifacts consumed external to the current domain, does it include a checkpoint verifying consumer reachability — or, if the distribution path is outside the agent's control, does it scope out delivery verification with reasoning in the Excluded section?
 9. If the gate targets an Agent SDK project, are operational checkpoints tagged `[operator-terminal]` with execution commands documented inline?
+10. Do the gate's checkpoints cover relevant anti-patterns from the registry? Where a guarding relationship exists between a checkpoint and a registry entry, has the `{AP-nn}` tag been applied? Are there relevant anti-patterns with no guarding checkpoint that should be addressed?
 
 If the answer to any of these is no, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
 
@@ -89,4 +94,5 @@ Write the gate file to the workspace root as `Q{n}-gate.md`. Present a brief sum
 
 ## Reference Files
 
-- **`references/gate-template.md`** — Structural template for gate documents. Conventions for titles, phases, checkpoints, verification methods, and operational sections.
+- **`references/gate-template.md`** — Structural template for gate documents. Conventions for titles, phases, checkpoints, verification methods, anti-pattern tags, and operational sections.
+- **`${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md`** — Named failure modes with scope, detection, and prevention fields. Read during Step 2 for anti-pattern tagging in Step 3.

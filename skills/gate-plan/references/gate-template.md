@@ -56,6 +56,18 @@ Depends on: {Q-references to prior gates, or "None"}
 
 Preflight gates must include at least one `[operational]` checkpoint. A preflight gate with only structural checkpoints can clear without proving the deliverable works — this is a Vacuous Green vector. For projects with external runtime dependencies (test fixtures, sample data, API access), fixture presence or a documented acquisition plan is itself a gating requirement, not deferred work.
 
+**Anti-pattern tags**: Checkpoints that guard against known anti-patterns from the anti-pattern registry (`references/anti-pattern-registry.md`) carry an inline tag referencing the AP-nn entry. The tag uses curly braces inside backticks — `` `{AP-nn}` `` — and appears after the category tag, before the checkpoint description:
+
+```markdown
+- [ ] **V1** `[operational]` `{AP-07}` Pipeline produces discriminating output on first run
+```
+
+Tags are optional. Apply them only when the checkpoint genuinely guards against the referenced anti-pattern — the checkpoint must prevent or detect the named failure mode. Not every checkpoint has anti-pattern relevance, and forcing tags where none applies degrades the signal. A checkpoint with no applicable anti-pattern remains untagged.
+
+When a checkpoint guards against multiple anti-patterns, list the AP-nn entries comma-separated within a single tag: `` `{AP-07, AP-10}` ``. Each referenced entry must exist in the registry. Order within the tag does not imply priority.
+
+The anti-pattern tag is a gate-authoring standard with the same normative status as the category tag and bypass marker conventions. Tagged checkpoints inform both review (tag validity and semantic accuracy) and execution (verification rigor calibrated to the failure mode).
+
 **Artifact evidence**: Every checkpoint must define what positive artifact proves it passed. A positive artifact is concrete, quotable evidence: command output, file contents, test counts, grep results, or equivalent observable output. Prose-only claims ("verified that X works," "confirmed it runs correctly") are not artifact evidence. A checkpoint without a defined artifact is unverifiable and must be redesigned.
 
 ## Sections Added During or After Execution

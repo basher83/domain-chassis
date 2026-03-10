@@ -18,7 +18,8 @@ The operator provides a gate reference: a Q-number (e.g., "Q4"), a filename (e.g
 Read the quality bar from two sources:
 
 1. `${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/SKILL.md` — Step 3 (quality requirements) and Step 4 (self-assessment questions). These define what a well-formed gate looks like.
-2. `${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md` — Structural conventions: title format, checkpoint ID patterns, verification method placement, bypass markers, section ordering.
+2. `${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md` — Structural conventions: title format, checkpoint ID patterns, verification method placement, bypass markers, anti-pattern tags, section ordering.
+3. `${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md` — Named failure modes catalog. Required for validating anti-pattern tag references and assessing semantic accuracy of guarding relationships.
 
 These are the criteria. Do not invent additional requirements or import standards from other frameworks. The gate is evaluated against the gate standard.
 
@@ -66,6 +67,8 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Cross-domain delivery verification (conditional).** If the gate modifies artifacts consumed external to the current domain, it must include at least one checkpoint that verifies consumer reachability through the actual distribution path, or scope out delivery verification in the Excluded section with reasoning. Evaluate three aspects: (1) delivery coverage — every cross-domain artifact modified by the gate has a corresponding reachability checkpoint, not just the source-level change; (2) conditional applicability — the delivery checkpoint is present when the gate modifies cross-domain artifacts, and absent when all artifacts are domain-local (presence in a domain-local gate is not a finding, but absence in a cross-domain gate is); (3) operator-dependent distribution — when the distribution path requires operator action or platform mechanics outside the gate agent's control (e.g., plugin cache refresh, manual deployment), an explicit scope-out in Excluded with reasoning that names what the agent cannot control and why in-scope checkpoints cover correctness is a valid resolution. A missing delivery checkpoint in a cross-domain gate is a blocking deficiency only when the distribution path is within the agent's control and no scope-out justification is provided.
 
+**Anti-pattern tag validation (conditional).** If the gate contains checkpoints with anti-pattern tags (`` `{AP-nn}` ``), validate three aspects: (1) every anti-pattern tag references a valid AP-nn entry present in the anti-pattern registry — tags referencing nonexistent entries are a finding; (2) the guarding relationship between the tagged checkpoint and the referenced anti-pattern is semantically correct — the checkpoint genuinely prevents or detects the named failure mode, not a superficially related one; (3) checkpoints with clear anti-pattern relevance that lack tags are flagged as potential omissions — this is a finding, not a blocker, since not every anti-pattern mapping is obvious to the authoring agent. If the gate contains no anti-pattern tags, note the absence and assess whether any checkpoints have obvious anti-pattern relevance that the authoring agent missed.
+
 ## Step 4 — Self-Assessment Questions
 
 Apply the eight questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
@@ -110,3 +113,4 @@ The section contains: a `Reviewed:` date line, a `Verdict:` line (PASS or FAIL),
 
 - **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/SKILL.md`** — Quality requirements (Step 3) and self-assessment questions (Step 4) that define the evaluation criteria.
 - **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/references/gate-template.md`** — Structural conventions for gate documents.
+- **`${CLAUDE_PLUGIN_ROOT}/references/anti-pattern-registry.md`** — Named failure modes catalog. Required for validating anti-pattern tag references during quality audit.
