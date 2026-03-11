@@ -88,7 +88,12 @@ Report each question's answer with specific evidence from the gate.
 
 Summarize the review. Structure:
 
-**Confidence verdict:** Would you present this gate to the operator at 4/5 confidence or above? Yes or no, with reasoning. This maps directly to gate-plan's threshold: "Do not present a draft you assess below 4/5 confidence."
+**Confidence rating:** Rate your confidence in the gate on a 1-5 scale with reasoning.
+
+- **1-2:** Blocking deficiencies. The gate cannot be executed as written — missing verification artifacts, structural non-compliance, or checkpoints that don't validate what they claim.
+- **3:** Significant findings that may require revision before execution. The gate is structurally sound but has gaps that could cause execution friction or ambiguous outcomes.
+- **4:** Minor findings only. The gate is ready for execution. This is the expected rating for a well-formed gate — reviews always surface something.
+- **5:** Unreachable. A 5/5 would mean zero findings, zero observations, nothing to improve. Reviews always produce findings; a reviewer reporting 5/5 hasn't looked hard enough. Never assign this rating.
 
 **Structural compliance:** List of compliant/non-compliant template conventions.
 
@@ -102,7 +107,7 @@ The operator reads the findings and decides what to fix. The review does not pro
 
 After presenting findings to the operator, append a `## Gate Review` section to the gate document. This records the review outcome and is required by gate-work's pre-clear detector.
 
-The section contains: a `Reviewed:` date line, a `Verdict:` line (PASS or FAIL), and a one-sentence summary. Verdict is PASS when the confidence assessment is 4/5 or above and no blocking deficiencies were found. Otherwise FAIL, with the primary blocking finding stated. Gate-work's pre-clear detector requires `Verdict: PASS` to clear the gate — a FAIL verdict blocks clearance until the gate is revised and re-reviewed.
+The section contains: a `Reviewed:` date line, a `Verdict:` line (PASS or FAIL), a `Confidence:` line with the numeric rating (e.g., `Confidence: 4/5`), and a one-sentence summary. Verdict is PASS when the confidence rating is 4/5 and no blocking deficiencies were found. Verdict is FAIL when the confidence rating is 3/5 or below, or when blocking deficiencies were found — state the primary blocking finding. Gate-work's pre-clear detector requires `Verdict: PASS` to clear the gate — a FAIL verdict blocks clearance until the gate is revised and re-reviewed.
 
 ## Related Skills
 
