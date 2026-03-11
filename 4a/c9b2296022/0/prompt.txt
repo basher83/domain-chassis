@@ -1,0 +1,9 @@
+/git-commit
+
+---
+
+need to bump plugin and marketplace jsons
+
+---
+
+yeah, make sure remote is set to https as well
