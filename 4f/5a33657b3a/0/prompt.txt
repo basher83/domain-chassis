@@ -1,0 +1,5 @@
+need to patch bump @.claude-plugin/marketplace.json workshop-polish plugin to 0.2.0 → 0.2.1
+
+---
+
+/git-status
