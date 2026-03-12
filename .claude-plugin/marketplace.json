@@ -34,7 +34,7 @@
         "url": "https://github.com/basher83/workshop-polish.git"
       },
       "description": "Domain-specific curation and reference plugin for the Workshop. Reference implementation evaluations, cookbook patterns, after-action reviews, and architecture decision records.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "category": "domain",
       "keywords": [
         "domains",
