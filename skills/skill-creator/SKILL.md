@@ -746,6 +746,60 @@ There are two patterns for delegating work to building blocks:
 
 ---
 
+## Description Optimization
+
+The description field in SKILL.md frontmatter is the primary mechanism that determines whether Claude invokes a skill. After creating or improving a skill, offer to optimize the description for better triggering accuracy. This requires the `claude` CLI tool (`claude -p`) and runs outside Cowork.
+
+### Step 1: Generate trigger eval queries
+
+Create 20 eval queries — a mix of should-trigger and should-not-trigger. Save as JSON:
+
+```json
+[
+  {"query": "the user prompt", "should_trigger": true},
+  {"query": "another prompt", "should_trigger": false}
+]
+```
+
+The queries must be realistic — concrete, specific, with detail like file paths, personal context, column names, company names, URLs. A mix of lengths, focusing on edge cases rather than clear-cut examples. For should-not-trigger queries, the most valuable ones are near-misses that share keywords but actually need something different.
+
+### Step 2: Review with user
+
+Present the eval set using the HTML template:
+
+1. Read `assets/eval_review.html`
+2. Replace placeholders: `__EVAL_DATA_PLACEHOLDER__` with the JSON array, `__SKILL_NAME_PLACEHOLDER__` with the skill name, `__SKILL_DESCRIPTION_PLACEHOLDER__` with the current description
+3. Write to a temp file and open it
+4. User edits queries, toggles should-trigger, clicks "Export Eval Set"
+5. Read the exported `eval_set.json`
+
+### Step 3: Run the optimization loop
+
+Save the eval set to the workspace, then run:
+
+```bash
+python -m scripts.run_loop \
+  --eval-set <path-to-trigger-eval.json> \
+  --skill-path <path-to-skill> \
+  --model <model-id> \
+  --max-iterations 5 \
+  --verbose
+```
+
+This handles the full loop automatically: 60/40 train/test split, evaluates current description (3 runs per query for reliability), calls Claude with extended thinking to propose improvements based on failures, re-evaluates each new description on both train and test, iterates up to 5 times. Selects best by test score to avoid overfitting. Opens a live HTML report that auto-refreshes as iterations complete.
+
+The scripts use `uv run` inline metadata for the `anthropic` dependency — no separate install step needed if `uv` is available.
+
+### Step 4: Apply the result
+
+Take `best_description` from the JSON output and update the skill's SKILL.md frontmatter. Show the user before/after and report the scores.
+
+### How skill triggering works
+
+Skills appear in Claude's `available_skills` list with their name + description, and Claude decides whether to consult a skill based on that description. Claude only consults skills for tasks it can't easily handle on its own — simple, one-step queries may not trigger a skill even if the description matches perfectly. Complex, multi-step, or specialized queries reliably trigger skills when the description matches. Eval queries should be substantive enough that Claude would benefit from consulting a skill.
+
+---
+
 # Conclusion
 
 Just pasting in the overall workflow again for reference:
