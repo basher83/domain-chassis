@@ -144,6 +144,26 @@ The pattern does not resolve on a single correction. Each challenge peels one la
 
 ---
 
+### AP-12: The Doctrinal Echo
+
+An observation valid in one context is generalized into universal doctrine, then propagates unconditionally through a chassis-level artifact. Each downstream consumer treats the propagated claim as established fact, and each application becomes another source of apparent authority for the next consumer. The echo accumulates false authority through repetition — by the time the error is discovered, the correction cost scales with the echo count, not the error severity.
+
+The root mechanism is hedging — the failure to name the specific constraint. "The-range has a bug where PostToolUse hook `continue: false` is silently ignored by the CLI via the SDK control protocol" self-limits. "Agent SDK projects require execution environment tagging" propagates unconditionally. The first names the disease. The second hedges with a comfortable generalization that applies everywhere because nothing in it says where it doesn't apply. The echo doesn't start at the propagation artifact. It starts at the moment the specific thing goes unnamed.
+
+The operator is the backpressure that catches hedging before it becomes doctrine. The naming instinct — replacing a vague category with the specific bug, the specific project, the specific mechanism — is the operator's job. When the operator is absent at the propagation boundary, the hedge passes unchallenged. No agent catches it because no agent has the naming instinct. The disease is the absent operator. The cure is infrastructure that forces specificity at the source so hedges don't pass even when the operator isn't watching.
+
+**Scope:** Any system where operational lessons propagate into reusable artifacts — skills, doctrine, templates, registries. Particularly acute when the propagation path crosses a chassis-level artifact that all domains consume. Not Range-specific.
+
+**Detection:** A claim that appears in multiple downstream artifacts but traces to a single source observation. The claim is stated identically or strengthened across artifacts rather than independently validated in each context. No downstream artifact questions or scopes the claim. The tell: the claim uses a category ("SDK projects") where a specific name belongs ("the-range's PostToolUse control protocol bug").
+
+**Prevention:** The operator is the last line of defense, but the operator can't be present at every propagation boundary. The format must force the naming the operator would do if present. Propagation artifacts must carry their scoping constraints — the specific bug, the specific project, the specific mechanism. Separating evidence artifacts (structured, factual, scoped) from interpretation artifacts (narrative, contextual) prevents the type confusion at the source. Evidence artifacts force specificity by schema; interpretation artifacts are free to generalize because they don't propagate into doctrine.
+
+**Provenance:** operator-terminal investigation (2026-03-16). An AAR lesson learned from the Q6 gate execution (2026-03-02) recommended gate-plan guidance for SDK projects. The recommendation was contextually valid for the-range (which has a specific nested-session constraint). It was implemented in domain-chassis/skills/gate-plan/SKILL.md as a universal requirement. From there it propagated into Q14, Q20, and Q21 gate documents — at minimum Q20's I2 checkpoint was incorrectly tagged, confirmed agent-verifiable per its own gate errata. A code comment carrying the same narrative was removed during a PR review. Root cause identified during an arscontexta session examining evidence quality in knowledge extraction, which produced the evidence/interpretation separation principle (Q25 workstream 2). The operator traced the full chain and identified the absent operator — himself, half-asleep at the wheel when the hedge entered the chassis — as the root disease.
+
+**Causal link to AP-11:** The doctrine didn't just create incorrect tags — it shaped gate structure. The `[operator-terminal]` doctrine pushed all operational checkpoints to the end of gates behind a fencing tag, creating the "long structural success → boundary shift to operational" pattern that the Q16 investigation (2026-03-07) identified as the reliable AP-11 layer 3 trigger. Three agents across four sessions reproduced the same cascade against the same gate structure. The Q16 open question — "Can gate structure encode AP-11 resistance by interleaving operational checkpoints with structural ones?" — traces directly to AP-12: the clustering that created the trigger was caused by the hedged doctrine. Remove the echo, remove the clustering, disrupt the trigger.
+
+---
+
 ## Registry Conventions
 
 Each entry follows a consistent structure: name, description (what it is and why it's dangerous), scope (where it applies), detection (how you know it's happening), prevention (how you stop it), and provenance (where it was first identified or most clearly demonstrated).

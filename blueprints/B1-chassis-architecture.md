@@ -3,7 +3,7 @@ Project: Workshop
 Type: Plugin Architecture
 Date: 2026-03-10
 Status: Draft
-Revision: v2
+Revision: v3 — commons formalization, investigation 003 findings, evidence-interpretation doctrine revision
 ---
 
 # B1 — Domain Chassis Architecture
@@ -68,6 +68,11 @@ governing constraints, how do changes get validated — are undocumented.
 | Q10 gate (workshop/gates/Q10-gate.md) | Landed implementation of anti-pattern checkpoint tagging. Defines the `{AP-nn}` tag convention, three-skill integration (gate-plan, gate-review, gate-work), and retrospective validation against Q15/Q16 content. Primary source for the Anti-Pattern Integration section. Demonstrates soul/vessel doctrine integration — spec-first convention definition validated against real artifacts |
 | README.md file operation model | Established the workspace vs plugin directory boundary and the read-only-at-runtime constraint. All architectural decisions in this blueprint must honor this separation |
 | Gate orchestrator plan (workshop/gate-orchestrator-dev-working/plan/plan.md) | Planned automation layer that sits directly on top of the chassis gate lifecycle. Defines a double-loop supervisor that dispatches gate-plan, gate-review, and gate-work as sub-agents with hook-enforced backpressure (BP-1 through BP-6). Introduces work-review phase not present in the current manual lifecycle. Pre-dates the blueprint standard — structurally a blueprint, will be formalized as B2. B1 is aware of the orchestrator as a downstream consumer but does not design for it. B2 has a blocker on a stable B1 |
+| ADR-001 amendment (workshop-polish/adrs/ADR-001-agent-context-loading-order.md) | Amended 2026-03-14 to integrate Vertical Context Inheritance pattern. Workspace CLAUDE.md files inherit into child repo sessions, crossing git boundaries. ADR-001 now defines Tier 1 Content Constraints — a vertical safety invariant that constrains what workspace CLAUDE.md can contain. Relevant to init-domain (scaffolds workspace CLAUDE.md) and prime (safe landing zone for CWD-dependent content that cannot live in workspace CLAUDE.md). Pattern source: Vault/TheMothership/Resources/patterns/Pattern-Vertical-Context-Inheritance.md |
+| Commons ADR-001 (commons/architecture-decisions/001-domain-chassis-placement.md) | Formalizes the rationale for domain-chassis living in Workshop rather than at 3I root. The chassis is a plugin built and maintained through Workshop's operational cycle. It is unique among domain plugins: it does not accept domain-specific artifacts. Cross-domain findings route through commons; the chassis receives updates as a result. The workbench/toolbox distinction is now documented as an architecture decision |
+| Investigation 003: operator-terminal propagation (commons/investigations/003-operator-terminal-propagation/) | Found that gate-plan SKILL.md line 62 contains factually inaccurate universal doctrine: "Agent SDK projects require execution environment tagging." Traced to AAR interpretation propagated as evidence into chassis-level skill. Detection delay 14 days. AP-07, AP-10, AP-12. Remediation pending. The investigation's three-artifact split (evidence, interpretation, ledger) is the proof of concept for the evidence-interpretation doctrine revision |
+| Evidence-interpretation separation doctrine revision (commons/doctrine-revisions/evidence-interpretation-separation.md) | Proposed chassis-level primitive: all 3I workflows producing knowledge must separate evidence (structured, factual, vault-ready) from interpretation (operator-facing narrative referencing evidence). Escalated from Q25 eval-study scope to system-wide doctrine. Directly affects the AAR skill and gate findings separation. Enforcement at production side, not vault intake |
+| AP-12: The Doctrinal Echo (references/anti-pattern-registry.md) | New anti-pattern identified during investigation 003. Hedged generalization echoed through chassis into all downstream gates. The operator-terminal investigation is AP-12's inaugural case — an AAR lesson about the-range's specific bug was generalized into universal gate-plan doctrine |
 
 ## Architecture
 
@@ -77,7 +82,9 @@ Workshop owns the domain-chassis lifecycle exclusively. No other domain modifies
 chassis directly. When a domain encounters friction or identifies improvement points for
 the chassis, that feedback is formally routed to Workshop for action. The strictness serves
 two purposes: accountability (one domain owns quality and consistency) and interoperability
-(changes are validated before they reach every domain simultaneously).
+(changes are validated before they reach every domain simultaneously). The placement
+rationale is formally documented in commons ADR-001
+(commons/architecture-decisions/001-domain-chassis-placement.md).
 
 The-range serves as the validation and testing ground for chassis changes. Any modification
 to the chassis must be validated on the-range prior to integration, due to the blast radius
@@ -120,9 +127,9 @@ domain-chassis/
     spec-review/
   specs/                  ← new
   templates/
-    ADR-template.md
+    adr-template.md
     blueprint-template.md
-    Proposal-template.md
+    proposal-template.md
     triage-format.md
 ```
 
@@ -235,6 +242,18 @@ the search target rotating. This "rotating search" shape — fixed hypothesis, r
 implementation — is a detection signal distinct from the Q16 five-layer recursion and
 warrants addition to AP-11's detection profile.
 
+Gate-plan known defect (from investigation 003): SKILL.md line 62 contains factually
+inaccurate universal doctrine — "Agent SDK projects require execution environment tagging."
+The actual constraint is specific to the-range's PostToolUse hook control protocol bug, not
+a property of all SDK projects. The paragraph caused every subsequent gate authored against
+SDK-adjacent projects to apply `[operator-terminal]` tags as doctrine rather than
+per-checkpoint assessment. This is AP-12 (The Doctrinal Echo) — an AAR interpretation
+propagated as evidence into a chassis-level skill. Remediation tracked in
+`commons/investigations/003-operator-terminal-propagation/ledger.md`. The causal chain
+extends to AP-11: the `[operator-terminal]` fencing clustered all operational checkpoints
+at gate end, creating the boundary-shift trigger pattern that reliably produces AP-11
+layer 3.
+
 #### Blueprint Lifecycle: plan → review
 
 Architecture design methodology. Blueprint-plan authors a blueprint from accumulated
@@ -257,12 +276,27 @@ independently of the gate and blueprint lifecycles but may be invoked during any
 
 ### Artifact Lifecycle
 
-<!-- TODO: This is the section that needs the most work. Map every artifact
-     class through its lifecycle:
+The evidence-interpretation separation doctrine revision
+(commons/doctrine-revisions/evidence-interpretation-separation.md) establishes a
+chassis-level primitive: workflows producing knowledge must separate evidence (structured,
+factual, vault-ready) from interpretation (operator-facing narrative referencing evidence
+but not containing it). This directly shapes the artifact lifecycle for two classes:
+
+AARs currently combine evidence and interpretation in a single document. The AAR skill
+needs structural revision to produce separate artifacts — or at minimum enforce structured
+sections with clear boundaries. The operator-terminal investigation (003) is the empirical
+case: an AAR's interpretation was treated as evidence and propagated into gate-plan
+doctrine, compounding for 14 days. The AAR skill is the most immediate target.
+
+Gate review findings are the second affected class. Review findings accumulate in the gate
+body today (the Q16 bloat problem). The companion findings file convention (Phase 3) is
+conceptually adjacent to the evidence-interpretation split — review findings are
+interpretation of how the gate measures up, not evidence of what the project does. Keeping
+them separate from the gate body (which is the execution spec) follows the same principle.
+
+<!-- TODO: Complete lifecycle mapping for remaining artifact classes:
      - Gate documents: plan creates → review audits → work executes → cleared moves to gates/
      - Blueprint documents: plan creates → review audits → decomposes into specs/gates
-     - Findings: where do review findings land? Companion file convention needed
-     - AARs: written to domain knowledge repo (domain-specific plugin)
      - Specs: live in specs/ — convention for chassis specs needs definition
 -->
 
@@ -315,6 +349,13 @@ touched. Vessel doctrine drove V1's retrospective validation — the convention 
 against real Q15/Q16 gate content, not just theoretically justified. The Q10 gate
 (workshop/gates/Q10-gate.md) is the authoritative source for implementation details and
 validation evidence.
+
+AP-12 (The Doctrinal Echo), identified during investigation 003 (2026-03-16), is the first
+anti-pattern discovered through the integration this section describes. An AAR
+interpretation entered the chassis as universal doctrine via gate-plan, then propagated
+through four gates. The tagging integration caught it retrospectively — investigation 003
+traces the causal chain including the AP-12 → AP-11 interaction where the doctrinal echo
+shaped gate structure that a deeper anti-pattern exploits.
 
 ### Gate Review: Findings Separation
 
@@ -371,6 +412,14 @@ is locked and validated on the-range.
 README.md updates to reflect the new plugin structure (blueprints/, specs/, renamed
 references) are deferred to the final phase — the README should document the landed
 architecture, not the planned one.
+
+The `init-domain` command scaffolds workspace CLAUDE.md files. When init-domain is updated
+for the new directory structure, the CLAUDE.md template must comply with ADR-001's Tier 1
+Content Constraints (vertical safety invariant). CWD-dependent content — workspace-relative
+file references, skill invocation suggestions, workspace-specific operational rules — must
+route to the prime skill output instead of the CLAUDE.md template. Prime's role as the safe
+landing zone for CWD-dependent orientation content should be reflected in the prime skill
+documentation when this update lands.
 
 ## Open Questions
 

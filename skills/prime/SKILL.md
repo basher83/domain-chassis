@@ -19,7 +19,7 @@ If multiple doctrine files are found, warn the operator — a workspace should b
 
 Read `PIN.md` at the workspace root — the project index tracking what's here and what state it's in. If PIN.md does not exist, note its absence and skip.
 
-List the subdirectories in the workspace root to cross-reference against PIN.md entries. Exclude `gates/` — that's the gate archive, not a project. Validate PIN.md against the workspace standard (`references/workspace-standard.md`). Flag stale status values, PIN.md entries without a directory on disk, or directories on disk without PIN.md entries. Don't block on these — report them as part of the summary.
+List the subdirectories in the workspace root to cross-reference against PIN.md entries. Exclude `gates/` — that's the gate archive, not a project. Validate PIN.md against the [workspace standard](references/workspace-standard.md). Flag stale status values, PIN.md entries without a directory on disk, or directories on disk without PIN.md entries. Don't block on these — report them as part of the summary.
 
 List files at the workspace root (not subdirectories). The expected set is: the domain doctrine file, PIN.md, QUEUE.md, TRIAGE.md, and any active gate files matching `Q*-gate.md`. Flag any file not in this set as unexpected — it may be an orphaned artifact, an uncleared gate that wasn't moved to `gates/`, or scratch work that should be filed or removed. Report unexpected files as part of the summary alongside any directory mismatches. Don't block on these.
 
@@ -39,4 +39,4 @@ Keep the summary concise. Focus on current state: what's in flight, what's conve
 
 ## Reference Files
 
-- **`references/workspace-standard.md`** — Workspace organization: domain workspace principles, PIN.md structure, QUEUE.md schema, TRIAGE.md lifecycle, workspace hygiene rules
+- **[workspace-standard.md](references/workspace-standard.md)** — Workspace organization: domain workspace principles, PIN.md structure, QUEUE.md schema, TRIAGE.md lifecycle, workspace hygiene rules

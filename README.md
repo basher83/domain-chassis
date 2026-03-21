@@ -57,7 +57,7 @@ These skills operate across two distinct locations. Understanding the boundary p
 
 ### Workspace root (current working directory)
 
-All domain-facing file operations target the workspace root. This is the operator's domain directory (e.g., `~/dev/workshop/`, `~/dev/forge/`).
+All domain-facing file operations target the workspace root. This is the operator's domain directory (e.g., `~/3I/workshop/`, `~/3I/forge/`).
 
 Files read from workspace root:
 
