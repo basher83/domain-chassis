@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "d55714ed5cad",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/aar/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d5/5714ed5cad/0/metadata.json",
+      "transcript": "/d5/5714ed5cad/0/full.jsonl",
+      "content_hash": "/d5/5714ed5cad/0/content_hash.txt",
+      "prompt": "/d5/5714ed5cad/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 35460,
+    "cache_read_tokens": 133998,
+    "output_tokens": 1546,
+    "api_call_count": 7
+  }
+}

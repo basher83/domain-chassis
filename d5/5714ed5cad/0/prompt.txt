@@ -1,0 +1,5 @@
+check git status
+
+---
+
+commmt all and push
