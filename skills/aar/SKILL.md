@@ -148,6 +148,10 @@ Template:
 
 - [ ] {action item 1}
 - [ ] {action item 2}
+
+## Operator Notes
+
+{leave blank for operator input}
 ```
 
 ## Phase 4: Cross-Reference
