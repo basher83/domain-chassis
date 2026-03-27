@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "6da3834eeb93",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude-plugin/marketplace.json",
+    ".gitignore"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6d/a3834eeb93/0/metadata.json",
+      "transcript": "/6d/a3834eeb93/0/full.jsonl",
+      "content_hash": "/6d/a3834eeb93/0/content_hash.txt",
+      "prompt": "/6d/a3834eeb93/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 34487,
+    "cache_read_tokens": 82927,
+    "output_tokens": 1259,
+    "api_call_count": 5
+  }
+}
