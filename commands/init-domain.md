@@ -8,7 +8,7 @@ allowed-tools: Bash, Glob, Read, Write
 
 Scaffold the common chassis for a new domain workspace. Creates the four required files and the gates directory at the current working directory.
 
-**Resolve the domain name**: use the `domain` argument if provided; otherwise infer it from the current working directory name (e.g., `workshop` from `/dev/workshop`).
+**Resolve the domain name**: use $ARGUMENTS if provided; otherwise infer it from the current working directory name (e.g., `workshop` from `/3I/workshop`).
 
 **Before creating anything**, check what already exists. If any of the target files are already present, list them and stop. Do not overwrite existing chassis files without explicit confirmation.
 
