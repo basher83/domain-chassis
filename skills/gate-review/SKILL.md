@@ -55,7 +55,7 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Ordering dependencies must be explicit.** Check whether later phases depend on earlier phases producing artifacts. Are these dependencies stated? Could an agent encounter a checkpoint that fails because a prerequisite wasn't documented?
 
-**Specify outcomes, not tool sequences.** Flag checkpoints that prescribe specific tool invocations, command sequences, or step-by-step procedures instead of defining what the result looks like. The gate defines "done," not "how."
+**Specify outcomes, not tool sequences.** A checkpoint that prescribes specific tool invocations, command sequences, or step-by-step procedures instead of defining what the result looks like is a blocking deficiency, not a minor finding. The gate defines "done," not "how."
 
 **Bypasses are decisions, not shortcuts.** Check any `[~]` markers for inline justification. A bypass without reasoning is a finding.
 

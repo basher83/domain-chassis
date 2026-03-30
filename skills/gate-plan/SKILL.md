@@ -79,8 +79,9 @@ Before showing the draft to the operator, evaluate it:
 8. If the gate modifies artifacts consumed external to the current domain, does it include a checkpoint verifying consumer reachability — or, if the distribution path is outside the agent's control, does it scope out delivery verification with reasoning in the Excluded section?
 9. Does every `[operator-terminal]` tag carry a stated project-specific execution constraint — naming the project, the mechanism, and why the agent cannot verify that checkpoint within a Claude Code session? Would a tag justified only by the project's technology category (without naming the specific constraint) fail this check?
 10. Do the gate's checkpoints cover relevant anti-patterns from the registry? Where a guarding relationship exists between a checkpoint and a registry entry, has the `{AP-nn}` tag been applied? Are there relevant anti-patterns with no guarding checkpoint that should be addressed?
+11. Does any checkpoint prescribe a specific tool invocation, command sequence, or procedure instead of defining what the result looks like?
 
-If the answer to any of these is no, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
+If the answer to any of 1-10 is no, or the answer to 11 is yes, fix the gaps before presenting. Do not present a draft you assess below 4/5 confidence and ask the operator to identify what's wrong. That's the operator's time wasted on work the agent should have caught.
 
 ### Step 5 — Output
 
