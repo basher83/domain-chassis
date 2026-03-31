@@ -71,7 +71,7 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 ## Step 4 — Self-Assessment Questions
 
-Apply the eight questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
+Apply the eleven questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
 
 1. If every checkpoint were cleared, does that fully justify the completion criteria? Are there gaps — things the first paragraph claims that no checkpoint validates?
 2. Does every checkpoint produce a positive, observable verification? Any that prove negatives or could pass silently?
@@ -81,6 +81,9 @@ Apply the eight questions from gate-plan Step 4 to the gate as if you were the a
 6. Does the gate include operational checkpoints that verify first-iteration readiness, not just structural completeness?
 7. If the gate targets multiple vectors across lifecycle stages, does it include a coverage matrix with zero empty cells?
 8. If the gate modifies artifacts consumed external to the current domain, does it include a checkpoint verifying consumer reachability — or, if the distribution path is outside the agent's control, does it scope out delivery verification with reasoning in the Excluded section?
+9. Does every `[operator-terminal]` tag carry a stated project-specific execution constraint — naming the project, the mechanism, and why the agent cannot verify that checkpoint within a Claude Code session? Would a tag justified only by the project's technology category (without naming the specific constraint) fail this check?
+10. Do the gate's checkpoints cover relevant anti-patterns from the registry? Where a guarding relationship exists between a checkpoint and a registry entry, has the `{AP-nn}` tag been applied? Are there relevant anti-patterns with no guarding checkpoint that should be addressed?
+11. Does any checkpoint prescribe a specific tool invocation, command sequence, or procedure instead of defining what the result looks like?
 
 Report each question's answer with specific evidence from the gate.
 
@@ -99,7 +102,7 @@ Summarize the review. Structure:
 
 **Quality findings:** Each quality requirement that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section.
 
-**Self-assessment gaps:** Any of the eight questions that answered "no," with evidence.
+**Self-assessment gaps:** Any of questions 1-10 that answered "no," or question 11 that answered "yes," with evidence.
 
 **Strengths:** What the gate does well. A review that only reports problems misses the chance to reinforce good patterns.
 
