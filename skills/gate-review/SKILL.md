@@ -45,7 +45,7 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Completion criteria must be claimable.** Can a practitioner read the first paragraph and know exactly what was proven? Does it name the scope, method, and deliverable? Or is it vague enough to mean different things to different readers?
 
-**Every checkpoint must produce a positive artifact.** Walk each checkpoint. Does it leave evidence when it passes — output to quote, a file that exists, a count that matches? Flag any checkpoint that could pass silently or proves a negative (absence of errors, no failures, clean exit without observable output). A checkpoint without a defined verification artifact is a blocking deficiency, not a minor finding.
+**Every verification method must produce a positive artifact.** Walk each verification method within each checkpoint. Does it leave evidence when it passes — output to quote, a file that exists, a count that matches? Flag any verification method that could pass silently or proves a negative (absence of errors, no failures, clean exit without observable output). When a checkpoint contains multiple verification methods, assess each method independently — a positive sibling method does not mask a negative-proof method within the same checkpoint. A checkpoint where some methods produce positive evidence while others prove negatives has a per-method granularity defect even if the checkpoint as a whole appears to have positive evidence. A verification method without a defined positive artifact is a blocking deficiency, not a minor finding.
 
 **Checkpoint categories must be declared.** Check whether every checkpoint uses the `[structural]` or `[operational]` tag after the checkpoint ID. Flag any checkpoint without a category tag. For preflight gates, verify at least one `[operational]` checkpoint exists — a preflight gate with only structural checkpoints is a finding at the highest priority, as it has direct Vacuous Green exposure (can clear without proving the deliverable works).
 
@@ -74,7 +74,7 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 Apply the eleven questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
 
 1. If every checkpoint were cleared, does that fully justify the completion criteria? Are there gaps — things the first paragraph claims that no checkpoint validates?
-2. Does every checkpoint produce a positive, observable verification? Any that prove negatives or could pass silently?
+2. Does every verification method within every checkpoint produce a positive, observable verification? Any that prove negatives or could pass silently — including negative-proof methods masked by positive siblings within the same checkpoint?
 3. Are all ordering dependencies documented?
 4. Could an agent execute this gate top-to-bottom without the operator clarifying sequencing, prerequisites, or intent?
 5. Is checkpoint granularity appropriate — unambiguous but not micromanaged?
