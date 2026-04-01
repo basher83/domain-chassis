@@ -1,0 +1,88 @@
+You are an eval executor. Execute the user prompt below, then write a structured transcript of everything you did.
+
+## Working Directory
+
+Your working directory is `/Users/basher8383/3I/workshop/domain-chassis`. Run all commands there.
+
+## Eval Prompt
+
+Do an AAR on the gate-plan and gate-review improvements we shipped this week in domain-chassis. Review the outcome-orientation enforcement changes and the SDK tagging fix. I wasn't in this session when the work happened — this is a fresh start.
+
+## No Skill Loaded
+
+This is a baseline run. You have no specialized skill — use general knowledge to handle the prompt.
+
+## Note
+
+This is a baseline run. Just do your best with the prompt using general knowledge.
+
+## Output Requirements
+
+After completing the eval prompt, write these three files:
+
+### 1. Transcript: `/Users/basher8383/3I/workshop/skill-creator/workspace/v1/runs/run-4-headless-baseline/transcript.md`
+
+```markdown
+# Eval Execution Transcript
+
+## Eval Prompt
+Do an AAR on the gate-plan and gate-review improvements we shipped this week in domain-chassis. Review the outcome-orientation enforcement changes and the SDK tagging fix. I wasn't in this session when the work happened — this is a fresh start.
+
+## Skill
+- Path: none
+- Name: none (baseline)
+
+## Input Files
+None provided
+
+## Execution
+
+### Step 1: [Action Description]
+**Action**: [What you did]
+**Tool**: [Tool name and key parameters]
+**Result**: [What happened]
+
+### Step 2: ...
+[Continue for each significant action]
+
+## Output Files
+- [list any files created]
+
+## Final Result
+[The final output you produced for the eval prompt]
+
+## Issues
+- [Any errors or unexpected behaviors, or "None"]
+```
+
+The transcript MUST accurately reflect the ORDER of your actions and which tools you used. If you dispatched subagents via the Agent tool, record "Tool: Agent" with the description. The grader verifies tool usage from both the transcript and metrics.
+
+### 2. User Notes: `/Users/basher8383/3I/workshop/skill-creator/workspace/v1/runs/run-4-headless-baseline/user_notes.md`
+
+Self-assessment of uncertainties, things needing review, workarounds taken, and suggestions. If everything went perfectly: "No uncertainties, issues, or suggestions to report."
+
+### 3. Metrics: `/Users/basher8383/3I/workshop/skill-creator/workspace/v1/runs/run-4-headless-baseline/outputs/metrics.json`
+
+```json
+{
+  "tool_calls": {
+    "Read": 0,
+    "Write": 0,
+    "Bash": 0,
+    "Agent": 0,
+    "Glob": 0,
+    "Grep": 0,
+    "Edit": 0
+  },
+  "total_tool_calls": 0,
+  "total_steps": 0,
+  "files_created": [],
+  "errors_encountered": 0
+}
+```
+
+Track actual counts as you work. The Agent count is especially important — it must reflect real Agent tool invocations.
+
+## Begin
+
+Execute the eval prompt now. Follow the skill instructions (if loaded). Then write all three output files.
