@@ -9,7 +9,7 @@ Structured retrospective analysis of a completed work session. The AAR captures 
 
 You (the main agent) drive the analysis. You sat through the session or have been primed with the project state. The AAR's value is in connecting observations to methodology decisions — identifying which skill, process, or configuration change would have changed the outcome. That's judgment work that requires your context.
 
-Spawn subagents for mechanical data gathering. Retain control of synthesis.
+Subagents gather mechanical data when you lack session context. When you participated in the work, your conversation history is the evidence base — subagents are skipped.
 
 ## Domain Resolution
 
@@ -42,18 +42,31 @@ Set `DOMAIN_REPO` to the resolved path.
 
 ## Phase 1: Data Gathering
 
-Spawn Explore-type subagents in parallel for the target project. Each returns a structured report.
+Before dispatching subagents, determine your context mode based on observable session signals:
 
-**Subagent 1 — Git Evidence:**
+- **Warm context:** Your conversation history contains the work being reviewed — gate execution output, implementation commits, debugging sessions, or other artifacts from participating in the work session. You have first-hand evidence.
+- **Cold context:** This session started from a prime, session log, or operator briefing. Your conversation history does not contain the work being reviewed — only summaries or descriptions of it.
+
+If warm context: skip subagent dispatch. Your session context is the primary evidence base for Phase 2. Proceed directly to Phase 2.
+
+If cold context: you must delegate data gathering to subagents using the Agent tool. Do not run git commands or scan artifacts yourself — dispatch subagents and wait for their reports. This keeps the main agent's context clean for the judgment-heavy Phase 2 work.
+
+Dispatch both subagents in a single message (one Agent tool call each) so they run concurrently. Do NOT set `run_in_background: true` — use foreground mode so you block until both return. Do not proceed to Phase 2 until both subagent results are in your conversation. Their reports are your primary evidence base.
+
+**Subagent 1 — Git Evidence** (via Agent tool):
+
+Brief the subagent with the project directory and ask it to run these git commands and report back:
 
 - `git log --oneline -20` — recent commits including the session's output
 - `git log --format='%h %s' --since="24 hours ago"` — today's session commits
 - `git diff HEAD~N..HEAD --stat` — files changed across the session (adjust N to span it)
 - `git tag --sort=-creatordate | head -5` — tags produced
 
-**Subagent 2 — Artifact State:**
+The subagent should return a structured summary of what it finds — commit hashes, file change stats, and any tags.
 
-Scan the workspace root and project directory for operational artifacts. Look for any of:
+**Subagent 2 — Artifact State** (via Agent tool):
+
+Brief the subagent with the workspace root and project directory. Ask it to scan for operational artifacts:
 
 - Implementation plans, task files, or work-in-progress documents
 - Spec directories and spec status files
@@ -62,13 +75,13 @@ Scan the workspace root and project directory for operational artifacts. Look fo
 - Agent configuration or activity logs (`.claude/` directory)
 - Test results, build outputs, or deployment records
 
-Report what exists and its current state. Do not assume a fixed set of artifacts — different domains and projects produce different artifacts. Report what you find.
+The subagent should report what exists and its current state. Do not assume a fixed set of artifacts — different domains and projects produce different artifacts.
 
-If the user can provide a session log path, read that too.
+If the user can provide a session log path, have one of the subagents read that too.
 
 ## Phase 2: Structured Review
 
-Work through each section using your session context and the subagent reports. Don't ask the user to repeat what's already been discussed — you have the conversation history.
+Work through each section using your available evidence — session context in warm mode, subagent reports in cold mode, or both if subagent data supplements your session context. Don't ask the user to repeat what's already been discussed.
 
 ### Change Summary
 
