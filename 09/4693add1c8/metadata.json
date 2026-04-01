@@ -3,7 +3,7 @@
   "checkpoint_id": "094693add1c8",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "skills/aar/SKILL.md"
   ],
@@ -19,13 +19,19 @@
       "transcript": "/09/4693add1c8/1/full.jsonl",
       "content_hash": "/09/4693add1c8/1/content_hash.txt",
       "prompt": "/09/4693add1c8/1/prompt.txt"
+    },
+    {
+      "metadata": "/09/4693add1c8/2/metadata.json",
+      "transcript": "/09/4693add1c8/2/full.jsonl",
+      "content_hash": "/09/4693add1c8/2/content_hash.txt",
+      "prompt": "/09/4693add1c8/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2184,
-    "cache_creation_tokens": 66866,
-    "cache_read_tokens": 770401,
-    "output_tokens": 12826,
-    "api_call_count": 21
+    "input_tokens": 2228,
+    "cache_creation_tokens": 111082,
+    "cache_read_tokens": 966019,
+    "output_tokens": 21746,
+    "api_call_count": 28
   }
 }
