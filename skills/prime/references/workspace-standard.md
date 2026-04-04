@@ -63,6 +63,7 @@ PIN.md tracks what's in the workspace. QUEUE.md tracks what the operator intends
 | Intent | Yes | What to accomplish. Imperative form. |
 | Scope | Yes | Project link (relative to workspace root) or domain name for cross-cutting work. |
 | Next | Yes | Immediate next action or current blocker. Use Q-references for dependencies (e.g. "Blocked by Q2"). |
+| Ensue Context | No | Ensue key names or prefixes that planning agents should load before starting work on the item. Dash (`—`) when no prior knowledge exists. Domains without ensue integration may omit this column entirely. |
 
 ### Format
 
@@ -73,6 +74,13 @@ PIN.md tracks what's in the workspace. QUEUE.md tracks what the operator intends
 
 | Q | Intent | Scope | Next |
 |---|--------|-------|------|
+```
+
+Domains with ensue integration add the optional fifth column:
+
+```markdown
+| Q | Intent | Scope | Next | Ensue Context |
+|---|--------|-------|------|---------------|
 ```
 
 ### Lifecycle
