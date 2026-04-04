@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "0d3a55dcf549",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/gate-review/SKILL.md",
+    "skills/skill-creator/LICENSE.txt",
+    "skills/skill-creator/SKILL.md",
+    "skills/skill-creator/agents/analyzer.md",
+    "skills/skill-creator/agents/comparator.md",
+    "skills/skill-creator/agents/executor.md",
+    "skills/skill-creator/agents/grader.md",
+    "skills/skill-creator/assets/eval_review.html",
+    "skills/skill-creator/references/benchmark-mode.md",
+    "skills/skill-creator/references/eval-mode.md",
+    "skills/skill-creator/references/mode-diagrams.md",
+    "skills/skill-creator/references/schemas.md",
+    "skills/skill-creator/scripts/__init__.py",
+    "skills/skill-creator/scripts/aggregate_benchmark.py",
+    "skills/skill-creator/scripts/copy_skill.py",
+    "skills/skill-creator/scripts/generate_report.py",
+    "skills/skill-creator/scripts/improve_description.py",
+    "skills/skill-creator/scripts/init_json.py",
+    "skills/skill-creator/scripts/init_skill.py",
+    "skills/skill-creator/scripts/package_skill.py",
+    "skills/skill-creator/scripts/prepare_eval.py",
+    "skills/skill-creator/scripts/quick_validate.py",
+    "skills/skill-creator/scripts/run_eval.py",
+    "skills/skill-creator/scripts/run_loop.py",
+    "skills/skill-creator/scripts/utils.py",
+    "skills/skill-creator/scripts/validate_json.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0d/3a55dcf549/0/metadata.json",
+      "transcript": "/0d/3a55dcf549/0/full.jsonl",
+      "content_hash": "/0d/3a55dcf549/0/content_hash.txt",
+      "prompt": "/0d/3a55dcf549/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 610,
+    "cache_creation_tokens": 13428,
+    "cache_read_tokens": 205620,
+    "output_tokens": 1215,
+    "api_call_count": 9
+  }
+}
