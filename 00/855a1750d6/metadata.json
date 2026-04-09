@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "00855a1750d6",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "foundation/EVIDENCE.md",
+    "skills/aar/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/00/855a1750d6/0/metadata.json",
+      "transcript": "/00/855a1750d6/0/full.jsonl",
+      "content_hash": "/00/855a1750d6/0/content_hash.txt",
+      "prompt": "/00/855a1750d6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 61,
+    "cache_creation_tokens": 59144,
+    "cache_read_tokens": 381445,
+    "output_tokens": 2228,
+    "api_call_count": 8
+  }
+}

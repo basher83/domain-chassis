@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "00855a1750d6",
+  "session_id": "c7a96bee-46b2-425f-aade-8cd995b5ad6f",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-09T01:37:20.158158Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "foundation/EVIDENCE.md",
+    "skills/aar/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "a65867b8e53b",
+  "token_usage": {
+    "input_tokens": 61,
+    "cache_creation_tokens": 59144,
+    "cache_read_tokens": 381445,
+    "output_tokens": 2228,
+    "api_call_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-09T01:37:20.097708Z",
+    "agent_lines": 106,
+    "agent_removed": 20,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 106,
+    "total_lines_changed": 126,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
