@@ -91,6 +91,8 @@ Report each question's answer with specific evidence from the gate.
 
 Summarize the review. Structure:
 
+**Classification binding.** When a quality requirement in Step 3 explicitly classifies a violation as a "blocking deficiency," the review must classify findings against that requirement at the same severity. The review agent does not have discretion to downgrade a finding that the quality bar already classified. If the review agent believes the classification is wrong for this gate type or context, it must state that disagreement as a named finding — "this review believes requirement X is over-specified for infrastructure gates because Y" — not silently reclassify the violation to a lower priority. A review that contains blocking deficiency findings produces a FAIL verdict regardless of the gate's overall quality. The operator decides whether the blocking classification is warranted and either fixes the gate or revises the quality bar — the review does not make that call on the operator's behalf.
+
 **Confidence rating:** Rate your confidence in the gate on a 1-5 scale with reasoning.
 
 - **1-2:** Blocking deficiencies. The gate cannot be executed as written — missing verification artifacts, structural non-compliance, or checkpoints that don't validate what they claim.
