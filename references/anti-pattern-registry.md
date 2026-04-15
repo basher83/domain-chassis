@@ -6,12 +6,6 @@
 
 Implements Range design principle 16: "Named anti-patterns are avoided more reliably than described pitfalls." And principle 21: "Ground specs against operations, not just design inputs" — operational grounding is the discovery mechanism that feeds this registry.
 
-## Entry Sizing
-
-New entries match the registry's median shape: a short description (roughly 40–90 words) plus one to two sentences per field. Long-form entries (AP-10, AP-11, AP-12) are outliers earning their length with multi-layer phenomena — recursion, propagation chains, doctrine traces. Default to the median; reach for long-form only when the pattern itself has layers a shorter entry would elide.
-
-Calibrate against the median of all entries, not the most recent or most detailed. Pattern-matching to the longest adjacent exemplar inflates entry length over time — the registry's own AP-13.
-
 ---
 
 ## Registry
@@ -167,18 +161,6 @@ The operator is the backpressure that catches hedging before it becomes doctrine
 **Provenance:** operator-terminal investigation (2026-03-16). An AAR lesson learned from the Q6 gate execution (2026-03-02) recommended gate-plan guidance for SDK projects. The recommendation was contextually valid for the-range (which has a specific nested-session constraint). It was implemented in domain-chassis/skills/gate-plan/SKILL.md as a universal requirement. From there it propagated into Q14, Q20, and Q21 gate documents — at minimum Q20's I2 checkpoint was incorrectly tagged, confirmed agent-verifiable per its own gate errata. A code comment carrying the same narrative was removed during a PR review. Root cause identified during an arscontexta session examining evidence quality in knowledge extraction, which produced the evidence/interpretation separation principle (Q25 workstream 2). The operator traced the full chain and identified the absent operator — himself, half-asleep at the wheel when the hedge entered the chassis — as the root disease.
 
 **Causal link to AP-11:** The doctrine didn't just create incorrect tags — it shaped gate structure. The `[operator-terminal]` doctrine pushed all operational checkpoints to the end of gates behind a fencing tag, creating the "long structural success → boundary shift to operational" pattern that the Q16 investigation (2026-03-07) identified as the reliable AP-11 layer 3 trigger. Three agents across four sessions reproduced the same cascade against the same gate structure. The Q16 open question — "Can gate structure encode AP-11 resistance by interleaving operational checkpoints with structural ones?" — traces directly to AP-12: the clustering that created the trigger was caused by the hedged doctrine. Remove the echo, remove the clustering, disrupt the trigger.
-
-### AP-13: The Floor Without Ceiling
-
-An instruction correction that raises the lower bound on output without re-establishing an upper bound. Original instruction was too terse; the fix requires more content but does not name what to exclude. Agents max out against the floor, pulling adjacent content (terminal output, audit narration, scratch reasoning) into the persistent artifact. Reproducibility across concurrent independent runs is the tell — same instruction, same over-inclusion pattern, different agents.
-
-**Scope:** Any instruction specifying output requirements, especially persistent-record instructions where the artifact has a different audience than the live session.
-
-**Detection:** Compare outputs across concurrent independent runs. Similar over-inclusion means the instruction is shaping it, not the agents. For persistent-record instructions: artifact that reads as a copy of terminal output has no ceiling.
-
-**Prevention:** Specify both bounds. A floor pairs with an explicit ceiling that names the excluded content category, not just a length limit — length limits collapse under defensive writing pressure.
-
-**Provenance:** operator-terminal observation (2026-04-15). gate-review Step 5 originally required a one-sentence summary for the Gate Review section; agents wrote stubs and put findings in terminal. Correction required "full findings with reasoning" and "same fidelity" as terminal — two concurrent Q34 reviews then independently produced review-process walk-throughs in the artifact because the correction raised the floor without specifying a ceiling.
 
 ---
 
