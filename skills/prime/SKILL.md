@@ -1,6 +1,7 @@
 ---
 name: prime
-description: This skill should be used when the user asks to "prime the session", "load context", "session context", "orient me", "what's in flight", "prime", "start the session", "load domain context", "what's the current state", or mentions loading initial context for a working session, getting oriented on the current state of things, or wanting a summary of active work and queue state. Provides session context loading by reading the doctrine, project index, queue, and triage state.
+description: Loads and summarizes session context by reading the doctrine, project index, queue, and triage state.
+when_to_use: Use when the user asks to prime/load chassis context, check what's in flight, get oriented on current state, or wants a summary of active work and queue in a domain.
 ---
 
 # Prime — Session Context Loading
