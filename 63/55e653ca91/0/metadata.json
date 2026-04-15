@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.5.5",
+  "checkpoint_id": "6355e653ca91",
+  "session_id": "86948231-271c-4bf6-8a4c-604478df0317",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-15T04:42:45.686637Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "references/anti-pattern-registry.md"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "6c020ef92094",
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 61927,
+    "cache_read_tokens": 0,
+    "output_tokens": 201,
+    "api_call_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-15T04:42:45.683993Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 0,
+    "total_lines_changed": 0,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 881,
+      "user_lines_removed": 1,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "blueprints/B2-qmd-architecture.md": 681,
+        "references/anti-pattern-registry.md": 18,
+        "skills/prime/SKILL.md": 2,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      },
+      "user_removed_per_file": {
+        "skills/prime/SKILL.md": 1
+      }
+    }
+  ]
+}
