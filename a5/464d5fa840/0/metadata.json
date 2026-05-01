@@ -1,0 +1,81 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "a5464d5fa840",
+  "session_id": "f35f16ae-5e23-49e0-96a0-c81e28f78f41",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-01T00:57:02.195818Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/aar/SKILL.md",
+    "skills/component-writeup/SKILL.md",
+    "skills/gate-plan/SKILL.md",
+    "skills/gate-work/SKILL.md",
+    "skills/spec-review/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "f3595b1d880d",
+  "token_usage": {
+    "input_tokens": 68,
+    "cache_creation_tokens": 36259,
+    "cache_read_tokens": 233728,
+    "output_tokens": 1515,
+    "api_call_count": 8
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-01T00:57:02.192521Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 1,
+    "human_removed": 4,
+    "total_committed": 0,
+    "total_lines_changed": 6,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 201,
+      "user_lines_removed": 11,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "skills/aar/SKILL.md": 2,
+        "skills/component-writeup/SKILL.md": 2,
+        "skills/gate-plan/SKILL.md": 2,
+        "skills/gate-review/SKILL.md": 11,
+        "skills/gate-work/SKILL.md": 2,
+        "skills/spec-review/SKILL.md": 2,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      },
+      "user_removed_per_file": {
+        "skills/aar/SKILL.md": 1,
+        "skills/component-writeup/SKILL.md": 1,
+        "skills/gate-plan/SKILL.md": 1,
+        "skills/gate-review/SKILL.md": 6,
+        "skills/gate-work/SKILL.md": 1,
+        "skills/spec-review/SKILL.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 360,
+      "user_lines_removed": 0,
+      "agent_lines_added": 21,
+      "agent_lines_removed": 191,
+      "user_added_per_file": {
+        "templates/ADR-template.md": 109,
+        "templates/Proposal-template.md": 71,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      }
+    }
+  ]
+}
