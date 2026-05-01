@@ -1,6 +1,7 @@
 ---
 name: spec-review
-description: This skill should be used when the user asks to "review a spec", "validate a spec", "is this spec implementable", "critique this spec", "find problems in my spec", "check this design doc", "is this plan sound", "review before implementation", "review this document", "document review", or mentions reviewing specs or structured documents for correctness, implementability, cross-reference consistency, or control-flow soundness before execution begins. Provides a structured multi-round review methodology using targeted subagent prompts that trace state through control flow branches and cross-reference interfaces.
+description: Reviews a spec or structured document for implementability, control-flow soundness, and cross-reference consistency before execution begins. Uses a director-holds-context pattern with targeted subagent prompts that trace state through branches and verify interface agreement.
+when_to_use: Use when the user asks to review/validate/critique a spec, check whether a spec is implementable, find problems in a spec or design doc, or wants a structured review of a plan before implementation.
 ---
 
 # Spec Review — Structured Document Review

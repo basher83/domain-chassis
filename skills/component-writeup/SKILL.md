@@ -1,6 +1,7 @@
 ---
 name: component-writeup
-description: This skill should be used when the user asks to "write up this component", "document this system", "produce a technical writeup", "create a component writeup", "architecture documentation", "system documentation", "document the architecture of X", "technical writeup of X", "how does this system work — write it up", "map out this system's components", or mentions producing structured technical documentation of a system, subsystem, or component set. Produces progressive-disclosure documentation following the Patnaik template with system-decomposition analytical rigor — component inventory, architecture overview, data flow, per-component detail, and grouped references.
+description: Produces structured technical documentation of a system by discovering components, tracing relationships through artifacts, and rendering progressive-disclosure writeups following the Patnaik template — component inventory, architecture overview, data flow, per-component detail, and grouped references.
+when_to_use: Use when the user asks to write up a component, document a system, produce a technical writeup, create architecture or system documentation, map out a system's components, or otherwise wants structured technical documentation of a subsystem or component set.
 ---
 
 # Component Writeup — Structured Technical Documentation

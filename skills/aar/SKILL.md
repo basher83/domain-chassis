@@ -1,6 +1,7 @@
 ---
 name: aar
-description: This skill should be used when the user asks to "do an AAR", "after action review", "retrospective", "review what happened", "what went well", "lessons learned", "post-mortem", "debrief the session", "debrief the run", or mentions reviewing a completed work session, analyzing outcomes, or capturing operational lessons. Provides the AAR methodology framework for structured retrospective analysis across any domain.
+description: Runs a structured retrospective of a completed work session — captures what specs, gates, and plans miss. What actually happened, where friction occurred, and what to change next time. Domain-agnostic methodology.
+when_to_use: Use when the user asks to do an AAR, after-action review, retrospective, post-mortem, debrief a session or run, review what happened, capture lessons learned, or analyze outcomes of completed work.
 ---
 
 # AAR — After Action Review

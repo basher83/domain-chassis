@@ -1,6 +1,7 @@
 ---
 name: gate-plan
-description: This skill should be used when the user asks to "create a gate", "plan a gate", "write a gate", "draft a gate", "new gate", "gate Q4", "gate for Q4", "gate plan", "create Q-gate", "gate plan for Q", "write a validation plan", or mentions creating a gate document, drafting validation criteria for a queue item, or planning what needs to be proven before work is considered done. Provides the gate document authoring methodology for creating production validation plans from queue items.
+description: Authors a gate document for a queue item — a production validation plan that defines what must be proven before work is considered done. Applies the quality bar and self-assessment questions that gate-review audits against.
+when_to_use: Use when the user asks to create/plan/write/draft a gate, create a gate for a specific Q-number (e.g. "gate Q4"), write a validation plan, or draft validation criteria for a queue item.
 ---
 
 # Gate Plan — Gate Document Authoring

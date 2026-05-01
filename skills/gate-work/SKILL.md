@@ -1,6 +1,7 @@
 ---
 name: gate-work
-description: This skill should be used when the user asks to "work the gate", "execute the gate", "run the gate", "work Q3", "run Q3", "do Q3", "execute Q3", "work through the gate", "gate work", "task me with the gate", "resume the gate", or mentions executing against an existing gate file, working through gate checkpoints, resuming a partially-completed gate, or validating against a gate document. Provides the gate execution methodology for working through an operator-authored validation plan.
+description: Executes an operator-authored gate document by loading it into context and working through each checkpoint as the executing agent — no subagent dispatch. Handles resume of partially-completed gates against the operator's validation plan.
+when_to_use: Use when the user asks to work/execute/run a gate, work or resume a specific Q-number (e.g. "work Q3"), execute gate checkpoints, or validate against an existing gate document.
 ---
 
 # Gate Work — Gate Execution
