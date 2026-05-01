@@ -1,0 +1,5 @@
+check git status of this repo, provide concise overview of most recent activity
+
+---
+
+i also need to patch bump .claude-plugin/plugin.json then we can move to staging and commiting
