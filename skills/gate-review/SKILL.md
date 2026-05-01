@@ -1,6 +1,7 @@
 ---
 name: gate-review
-description: This skill should be used when the user asks to "review the gate", "audit the gate", "check the gate", "gate review", "does this gate pass", "evaluate this gate", "review Q3-gate", "is this gate ready", or mentions evaluating an existing gate document against quality standards, checking gate verification rigor, or auditing a gate before execution. Provides the gate quality audit methodology for evaluating gate documents against the gate-plan quality bar.
+description: Audits an existing gate document against the gate-plan quality bar — the quality assurance step between plan and work. Produces findings (structural compliance, quality findings, self-assessment gaps, strengths) and a PASS/FAIL verdict with confidence rating.
+when_to_use: Use when the user asks to review/audit/check a gate, evaluate a gate (e.g. "review Q3-gate"), ask whether a gate passes or is ready for execution, or wants a quality check before running a gate.
 ---
 
 # Gate Review — Gate Quality Audit
@@ -89,7 +90,9 @@ Report each question's answer with specific evidence from the gate.
 
 ## Step 5 — Findings Report
 
-Summarize the review. Structure:
+The Findings Report goes to two surfaces: the terminal (for the operator in real time) and the `## Gate Review` section appended to the gate document (for future readers — gate-work's pre-clear detector, later re-reviewers, and the operator months from now). Both surfaces receive the same report. The terminal may additionally include the per-requirement and per-question audit walk produced during Steps 2–4 so the operator can audit the review live; the persisted artifact must not include that walk. Future readers need conclusions, not a replay of the audit.
+
+Report structure:
 
 **Classification binding.** When a quality requirement in Step 3 explicitly classifies a violation as a "blocking deficiency," the review must classify findings against that requirement at the same severity. The review agent does not have discretion to downgrade a finding that the quality bar already classified. If the review agent believes the classification is wrong for this gate type or context, it must state that disagreement as a named finding — "this review believes requirement X is over-specified for infrastructure gates because Y" — not silently reclassify the violation to a lower priority. A review that contains blocking deficiency findings produces a FAIL verdict regardless of the gate's overall quality. The operator decides whether the blocking classification is warranted and either fixes the gate or revises the quality bar — the review does not make that call on the operator's behalf.
 
@@ -102,17 +105,19 @@ Summarize the review. Structure:
 
 **Structural compliance:** List of compliant/non-compliant template conventions.
 
-**Quality findings:** Each quality requirement that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section.
+**Quality findings:** Only quality requirements that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section. Do not include requirements that passed — those belong in the Step 3 terminal walk, not in the report.
 
-**Self-assessment gaps:** Any of questions 1-10 that answered "no," or question 11 that answered "yes," with evidence.
+**Self-assessment gaps:** Only questions 1–10 that answered "no," or question 11 that answered "yes," with evidence. Do not include clean answers — those belong in the Step 4 terminal walk, not in the report.
 
 **Strengths:** What the gate does well. A review that only reports problems misses the chance to reinforce good patterns.
 
 The operator reads the findings and decides what to fix. The review does not propose rewrites, suggest alternative checkpoints, or offer to regenerate the gate. That's the operator's work or a subsequent gate-plan invocation.
 
-After presenting findings to the operator, append a `## Gate Review` section to the gate document. This records the review outcome and is required by gate-work's pre-clear detector.
+After presenting the Findings Report in the terminal, append a `## Gate Review` section to the gate document containing the same report. This records the review outcome and is required by gate-work's pre-clear detector.
 
-The section contains: a `Reviewed:` date line, a `Verdict:` line (PASS or FAIL), a `Confidence:` line with the numeric rating (e.g., `Confidence: 4/5`), and the full findings with reasoning — not a one-sentence summary. Write to the gate document what you would tell the operator in the terminal: each finding with its affected checkpoint(s), why it matters, and what the fix looks like. Include strengths worth reinforcing. The Gate Review section is the persistent record of the review — the terminal output disappears when the session ends, so the written artifact must carry the same fidelity. Verdict is PASS when the confidence rating is 4/5 and no blocking deficiencies were found. Verdict is FAIL when the confidence rating is 3/5 or below, or when blocking deficiencies were found — state the primary blocking finding. Gate-work's pre-clear detector requires `Verdict: PASS` to clear the gate — a FAIL verdict blocks clearance until the gate is revised and re-reviewed.
+The section opens with three header lines — `Reviewed: {date}`, `Verdict: PASS` or `Verdict: FAIL`, and `Confidence: {n}/5` — then the report body: structural compliance, quality findings, self-assessment gaps, and strengths. Each persisted finding must carry full reasoning — affected checkpoints, why it matters, and fix shape. Do not downgrade findings to one-sentence summaries. The fidelity floor applies to the findings themselves, not to the Step 2–4 audit walk, which remains terminal-only.
+
+Verdict is PASS when confidence is 4/5 and no blocking deficiencies were found. Verdict is FAIL when confidence is 3/5 or below, or when blocking deficiencies were found — state the primary blocking finding on the Verdict line. Gate-work's pre-clear detector requires `Verdict: PASS` to clear the gate; a FAIL verdict blocks clearance until the gate is revised and re-reviewed.
 
 ## Related Skills
 
