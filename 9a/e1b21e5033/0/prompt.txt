@@ -51,3 +51,7 @@ AP-13 revert (4e6d320) still has no human rationale in the commit body - that wa
 ---
 
 Idk about that. adding a annotation in the registry about AP-13 that was explictly removed because it was wrong sound like an anti-pattern itself.
+
+---
+
+fair, 2 is fine. lets commit this sessions work
