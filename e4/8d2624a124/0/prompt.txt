@@ -55,3 +55,7 @@ Idk about that. adding a annotation in the registry about AP-13 that was explict
 ---
 
 fair, 2 is fine. lets commit this sessions work
+
+---
+
+lets commit the .claude/settings.json mod and .claude/agents/ that was maintence for entire
