@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "e48d2624a124",
+  "session_id": "4427fbe1-3815-4974-80fa-afd3f2d5458c",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-12T05:49:01.418382Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "066b09e0936b",
+  "token_usage": {
+    "input_tokens": 127,
+    "cache_creation_tokens": 267028,
+    "cache_read_tokens": 3916387,
+    "output_tokens": 59231,
+    "api_call_count": 47
+  },
+  "session_metrics": {
+    "turn_count": 15
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 392,
+      "user_lines_removed": 7,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 180,
+      "user_added_per_file": {
+        ".claude/agents/entire-search.md": 25,
+        ".claude/settings.json": 7,
+        "templates/ADR-template.md": 109,
+        "templates/Proposal-template.md": 71,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      },
+      "user_removed_per_file": {
+        ".claude/settings.json": 7
+      }
+    }
+  ]
+}
