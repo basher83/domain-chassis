@@ -1,0 +1,53 @@
+throughly explore this repo, provide a concise overview of what this repo is, what it is solving for, what in-flight, most recent work completed, any outstanding items or things to flag
+
+---
+
+AP-13 - purposeful redaction, is there not a annotation in the commit msg? 4. confirm it's catching macOS detritus. 2 unpushed commits on main - noted, will address before end of session. Need to create a repo AGENTS.md and populate it with repo specific guidance then symlink to CLAUDE.md
+
+---
+
+Workspace-level orientation lives in `../CLAUDE.md` - this isi redundant; ../CLAUDE.md auto loads. Cross-skill file references use `${CLAUDE_PLUGIN_ROOT}/skills/{owner}/...` - {owner} Is ambiguous As well as incorrect it would be {skill name}. ## Versioning - should have semantics for semver; patch bump vs others. Prune useless context: ## macOS housekeeping
+
+---
+
+also need to mention the contract for .claude-plugin/marketplace.json, not just .claude-plugin/plugin.json
+
+---
+
+Actually you know what I just thought of? All of the bump workflow marketplace plugin patching needs its own skill. I just realized that. We don't need the context window with all this stuff in the Agents.md and Claude.md I stubbed .claude/skills/chassis-release/SKILL.md with a blank skill to get us started
+
+---
+
+So I did a quick look at the git history and formatting definitely oscillates a lot. Clearly the agents aren't sticking to my SKILL that I have set up but we need to reference that and take a look at it. It's right here. Don't make any edits yet. Just highlight any conflicts or friction that the commit workflow SKILL has with what we've already drafted /Users/basher8383/3I/workshop/lunar-claude/plugins/devops/git-workflow/skills/git-workflow/SKILL.md
+
+---
+
+fair, so A I patched upstream - all lower case. E. was patched to reflect propoer reality. D - hands off to git-commit F/G no longer concerns
+
+---
+
+Scope on bump commits - i'm not concerned with the actual history, just trying to standardize. git-commit owns the workflow. Subject length - same. my push back; is there an actual need for more than 50 chars?
+
+---
+
+git-commit patched, 72 no enforced
+
+---
+
+lets do a fresh pass on chassis-release skill make sure theres no more conflicts
+
+---
+
+Frontmatter overpromises - I'd leave out all the commit verbiage. we aren't committing at all. Line 30 ("…in the same commit") - remove. Step 1 prefix assumption - I mean, I think we are overengineering here. look at the semver number in plugin/marketplace.json why look at commit history? Gap-closing semantics - agree, to add to that the version in marketplace.json is not load bearing ie only the plugin.json matters. "atomically" (line 9) — concur. 9 - not needed. lets make edits
+
+---
+
+great, any other loose ends?
+
+---
+
+AP-13 revert (4e6d320) still has no human rationale in the commit body - that was reverted because it was incorrect, you sure theres nothing in that commit body? even if there is its a friction, you are at least the 3rd session to highlight it so that needs a fix
+
+---
+
+Idk about that. adding a annotation in the registry about AP-13 that was explictly removed because it was wrong sound like an anti-pattern itself.
