@@ -70,9 +70,11 @@ Evaluate the gate against each quality requirement from gate-plan Step 3. For ea
 
 **Anti-pattern tag validation (conditional).** If the gate contains checkpoints with anti-pattern tags (`` `{AP-nn}` ``), validate three aspects: (1) every anti-pattern tag references a valid AP-nn entry present in the anti-pattern registry — tags referencing nonexistent entries are a finding; (2) the guarding relationship between the tagged checkpoint and the referenced anti-pattern is semantically correct — the checkpoint genuinely prevents or detects the named failure mode, not a superficially related one; (3) checkpoints with clear anti-pattern relevance that lack tags are flagged as potential omissions — this is a finding, not a blocker, since not every anti-pattern mapping is obvious to the authoring agent. If the gate contains no anti-pattern tags, note the absence and assess whether any checkpoints have obvious anti-pattern relevance that the authoring agent missed.
 
+**Decision-token legend validation (conditional).** When a gate cites decision-record tokens — `d-NNNN`, `ADR-NNNN`, or an equivalent external decision ID — run the deterministic citation checker (`${CLAUDE_PLUGIN_ROOT}/skills/gate-review/scripts/check-citations.py <gate-file>`, from the workspace root so pointers resolve) and record its exit code and output. The checker's exit code is the verdict input, not an agent's spot-check (AP-06, The Narrative Escape): a RED exit is a blocking deficiency — a missing legend entry for a worked-example token, a malformed pointer, a dangling pointer, or a gross title mismatch; an UNRESOLVABLE exit is surfaced to the operator as "N pointers unverifiable in this environment" — not a silent pass and not a citation defect; only a GREEN or N/A exit clears the requirement. This requirement replaces any instruction to "spot-resolve" or "grep and confirm" a citation by hand — the checker is the resolution, and the review quotes its verdict. Conditional applicability: a gate that cites no decision-record tokens draws the checker's N/A and is not a finding. Anti-pattern tags (`{AP-nn}`) are not decision-record tokens and do not trigger this requirement.
+
 ## Step 4 — Self-Assessment Questions
 
-Apply the eleven questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
+Apply the twelve questions from gate-plan Step 4 to the gate as if you were the authoring agent reviewing your own work:
 
 1. If every checkpoint were cleared, does that fully justify the completion criteria? Are there gaps — things the first paragraph claims that no checkpoint validates?
 2. Does every verification method within every checkpoint produce a positive, observable verification? Any that prove negatives, could pass silently, or use search-and-validate patterns that pass vacuously on zero results — including negative-proof methods masked by positive siblings within the same checkpoint?
@@ -85,6 +87,7 @@ Apply the eleven questions from gate-plan Step 4 to the gate as if you were the 
 9. Does every `[operator-terminal]` tag carry a stated project-specific execution constraint — naming the project, the mechanism, and why the agent cannot verify that checkpoint within a Claude Code session? Would a tag justified only by the project's technology category (without naming the specific constraint) fail this check?
 10. Do the gate's checkpoints cover relevant anti-patterns from the registry? Where a guarding relationship exists between a checkpoint and a registry entry, has the `{AP-nn}` tag been applied? Are there relevant anti-patterns with no guarding checkpoint that should be addressed?
 11. Does any checkpoint prescribe a specific tool invocation, command sequence, or procedure instead of defining what the result looks like?
+12. If the gate cites decision-record tokens, does the Decision-Token Legend carry one decision title and one `<corpus-path>#<record-id>` source pointer per token, and does the citation checker exit GREEN/N-A? A RED exit, or a missing legend on a token-citing gate, is a blocking deficiency.
 
 Report each question's answer with specific evidence from the gate.
 
@@ -107,7 +110,7 @@ Report structure:
 
 **Quality findings:** Only quality requirements that scored fail or partial, with the specific checkpoint(s) affected and what's wrong. Prioritize by impact — a verification that can pass without validating anything is higher priority than a missing Excluded section. Do not include requirements that passed — those belong in the Step 3 terminal walk, not in the report.
 
-**Self-assessment gaps:** Only questions 1–10 that answered "no," or question 11 that answered "yes," with evidence. Do not include clean answers — those belong in the Step 4 terminal walk, not in the report.
+**Self-assessment gaps:** Only questions 1–10 or 12 that answered "no," or question 11 that answered "yes," with evidence. Do not include clean answers — those belong in the Step 4 terminal walk, not in the report.
 
 **Strengths:** What the gate does well. A review that only reports problems misses the chance to reinforce good patterns.
 

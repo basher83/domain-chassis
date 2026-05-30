@@ -68,6 +68,22 @@ When a checkpoint guards against multiple anti-patterns, list the AP-nn entries 
 
 The anti-pattern tag is a gate-authoring standard with the same normative status as the category tag and bypass marker conventions. Tagged checkpoints inform both review (tag validity and semantic accuracy) and execution (verification rigor calibrated to the failure mode).
 
+**Decision-token legend**: When — and only when — a gate cites decision-record tokens, it carries a **Decision-Token Legend** resolving each cited token to one decision title and one source pointer. A decision-record token is a short identifier standing in for a recorded decision: `d-NNNN`, `ADR-NNNN`, or an equivalent external decision ID. A gate that cites no such tokens does not carry a legend — the convention is conditional, not a blanket requirement on every gate. Anti-pattern tags (`{AP-nn}`) are **not** decision-record tokens: they resolve against the anti-pattern registry separately and never trigger a legend.
+
+The **source pointer** uses the syntax `<corpus-path>#<record-id>`, where `<corpus-path>` is a path resolvable workspace-root-relative to the corpus that holds the decision and `<record-id>` is the record's own identifier (for example, a JSON `id` field). For a one-record-per-file corpus — such as an ADR markdown file — the file path is the record and the `#<record-id>` anchor is optional.
+
+The legend is the **authoritative resolution** of a token's identity. Inline mentions of a token in the gate's prose may add context, but must not restate the decision's identity; where prose and legend disagree, the legend governs. Resolve each token against its own source once, at authoring time, and record the title and pointer — do not key the legend off a secondary citation (another gate, a triage note, a prior review), which can itself be wrong.
+
+The convention is enforced by a deterministic checker shipped in the chassis and run from the gate-plan (authoring self-check) and gate-review (verdict input) skills. The checker resolves every legend pointer against its corpus and returns a non-zero exit when an entry is missing, a pointer is malformed or dangling, or a stated title grossly mismatches the resolved record — so a misattributed citation is caught structurally, not left to a reader's spot-check.
+
+```markdown
+## Decision-Token Legend
+
+| Token | Decision title (resolved against source) | Source pointer |
+|-------|------------------------------------------|----------------|
+| `d-0008` | Audit reviewer is claude-opus-4-7; builder was GPT-5.5 | `latent-space/.questionnaire/2026-05-28:01-53-48/state.json#d-0008` |
+```
+
 **Artifact evidence**: Every checkpoint must define what positive artifact proves it passed. A positive artifact is concrete, quotable evidence: command output, file contents, test counts, grep results, or equivalent observable output. Prose-only claims ("verified that X works," "confirmed it runs correctly") are not artifact evidence. A checkpoint without a defined artifact is unverifiable and must be redesigned.
 
 ## Sections Added During or After Execution
