@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "e60fdf9d8f10",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "AGENTS.md",
+    "README.md",
+    "blueprints/B1-chassis-architecture.md",
+    "blueprints/BLUEPRINT.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e6/0fdf9d8f10/0/metadata.json",
+      "transcript": "/e6/0fdf9d8f10/0/full.jsonl",
+      "content_hash": "/e6/0fdf9d8f10/0/content_hash.txt",
+      "prompt": "/e6/0fdf9d8f10/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10642,
+    "cache_creation_tokens": 84679,
+    "cache_read_tokens": 1621272,
+    "output_tokens": 32190,
+    "api_call_count": 26
+  }
+}
