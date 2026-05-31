@@ -7,11 +7,11 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 | Skill | Purpose | Lifecycle Role |
 |-------|---------|----------------|
 | aar | After-action review of a completed work session | Writes AAR to domain knowledge repo |
+| component-writeup | Document a system by discovering components and tracing their relationships | Produces progressive-disclosure writeup documents |
 | gate-plan | Author a gate document from a QUEUE.md item | Creates Q{n}-gate.md |
 | gate-review | Audit a gate document against the quality bar | Produces findings, appends Gate Review verdict to gate document |
 | gate-work | Execute a gate document checkpoint by checkpoint | Edits Q{n}-gate.md in place, moves to gates/ on clear |
 | prime | Load doctrine, PIN, queue, and triage state | Read-only summary |
-| skill-creator | Create, improve, and evaluate skills | Creates/edits SKILL.md files |
 | spec-review | Multi-round structured document review via subagent | Produces findings, no file writes |
 
 ## Commands
@@ -26,6 +26,7 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 |------|---------|
 | SOUL.md | Foundational principle: specs are the soul, implementations are disposable |
 | VESSEL.md | Foundational principle: the source is the vessel, source is ground truth |
+| EVIDENCE.md | Foundational principle: evidence and interpretation are separate artifacts |
 | WELCOME.md | System orientation for agents entering a domain workspace |
 
 ## References
@@ -39,9 +40,10 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 
 | File | Purpose |
 |------|---------|
-| ADR-template.md | Architecture Decision Record format |
+| adr-template.md | Architecture Decision Record format |
 | blueprint-template.md | Blueprint document scaffold |
-| Proposal-template.md | Options evaluation and decision proposal format |
+| component-writeup-template.md | Progressive-disclosure component writeup scaffold |
+| proposal-template.md | Options evaluation and decision proposal format |
 | triage-format.md | Triage intake formatting conventions |
 
 ## Blueprints
