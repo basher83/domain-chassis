@@ -1,0 +1,1 @@
+i also need to patch bump workshop/domain-chassis/.claude-plugin/plugin.json so the plugin will update
