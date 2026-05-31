@@ -1,0 +1,63 @@
+{
+  "cli_version": "0.6.3",
+  "checkpoint_id": "18c784a751a8",
+  "session_id": "8d1126bc-d9f9-48de-b1e1-b61d88a51e79",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-31T23:07:26.17773Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-8[1m]",
+  "turn_id": "dad1c081c2b9",
+  "token_usage": {
+    "input_tokens": 10640,
+    "cache_creation_tokens": 83923,
+    "cache_read_tokens": 1535882,
+    "output_tokens": 31673,
+    "api_call_count": 25
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 267,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "docs/audits/AUDIT_REPORT_2026-05-31.md": 87,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 360,
+      "user_lines_removed": 0,
+      "agent_lines_added": 109,
+      "agent_lines_removed": 187,
+      "user_added_per_file": {
+        "templates/ADR-template.md": 109,
+        "templates/Proposal-template.md": 71,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 360,
+      "user_lines_removed": 0,
+      "agent_lines_added": 113,
+      "agent_lines_removed": 189,
+      "user_added_per_file": {
+        "templates/ADR-template.md": 109,
+        "templates/Proposal-template.md": 71,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      }
+    }
+  ]
+}

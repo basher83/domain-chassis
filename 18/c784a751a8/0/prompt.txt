@@ -1,0 +1,5 @@
+Great, lets reconcile then. The Known Gaps entry is stale and AGENTS.md line 51 states "specs/ directory is empty," but specs/queue-lifecycle.md exists and is git-tracked. Easy fix. A B2 numbering collision spans three docs. Firsst AGENTS.md line 36 - AGENTS.md should not be narrating the semantics beyond bluebrints are here and a pointer to what they are, not trying to track each by number. blueprints/BLUEPRINT.md needs to only assert what is there since its the tracker. agents/ (ships gate-operator.md, a real subagent) - yes its a real subagent file but its a purposeful no-op stub. Three git-tracked top-level directories are absent from every README structure table: that is a easy fix although tracking that deeply into specific scripts in skills seems too deep to me. AGENTS.md references "the chassis-release skill" - right, that likely should be a skill but short term re word it as slash comd.
+
+---
+
+disambiguated consistently (e.g. "commons ADR-001" vs "chassis ADR-001") - lets do that good practice
