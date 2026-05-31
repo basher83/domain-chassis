@@ -21,6 +21,12 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 |---------|---------|
 | init-domain | Scaffold a new domain workspace with the four chassis files and gates directory |
 
+## Agents
+
+| File | Purpose |
+|------|---------|
+| gate-operator.md | Gate-lifecycle dispatcher subagent. A purposeful no-op stub: it detects and reports lifecycle state but intentionally dispatches nothing until the gate-orchestrator is built. |
+
 ## Foundation
 
 | File | Purpose |
@@ -53,6 +59,15 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 |------|---------|
 | BLUEPRINT.md | Index of architecture blueprints for the chassis |
 | B1-chassis-architecture.md | Chassis architecture: current state, component interactions, artifact lifecycle, governance |
+| B2-qmd-architecture.md | QMD as 3I search infrastructure: deployed system, collection scoping, contamination controls |
+
+## ADRs
+
+Chassis-local architecture decisions — cite as `chassis ADR-{n}` to distinguish from commons ADRs (3I-wide, referenced in foundation and blueprints).
+
+| File | Purpose |
+|------|---------|
+| ADR-001-utc-canonical-timestamps.md | Chassis ADR-001: UTC as the canonical timestamp representation (Status: Proposed) |
 
 ## File Operation Model
 
@@ -80,7 +95,7 @@ No skill writes to the plugin directory. The plugin is read-only at runtime.
 
 ### Plugin directory (`${CLAUDE_PLUGIN_ROOT}`)
 
-Skills read their own references and cross-reference sibling skills. Nothing is written here.
+Skills read their own references, cross-reference sibling skills, and share runtime helper scripts under `skills/_shared/`. Nothing is written here.
 
 Same-skill references use relative paths:
 

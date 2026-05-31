@@ -27,13 +27,11 @@ Cross-skill file references use `${CLAUDE_PLUGIN_ROOT}/skills/{skill-name}/...`.
 
 ## Manifests
 
-`.claude-plugin/` holds two manifests: `plugin.json` (the plugin manifest, read at install and load) and `marketplace.json` (the registry, read by marketplace consumers). For semver semantics, the contract between the two, and the release workflow, use the `chassis-release` skill.
+`.claude-plugin/` holds two manifests: `plugin.json` (the plugin manifest, read at install and load) and `marketplace.json` (the registry, read by marketplace consumers). For semver semantics, the contract between the two, and the release workflow, use the `chassis-release` slash command.
 
 ## Blueprints and gates
 
-Blueprints live in `blueprints/B{n}-{descriptor}.md` with `BLUEPRINT.md` as the index. Numbering is sequential within the chassis, paralleling the `Q{n}-gate.md` convention used in operator workspaces. Gates themselves are never authored in this repo — they live in domain workspaces and reference chassis skills.
-
-Current state: B1 (chassis architecture) is Draft. B2 (gate orchestrator) is blocked on B1 stabilizing. B2-qmd-architecture covers QMD as 3I search infrastructure.
+Blueprints live in `blueprints/B{n}-{descriptor}.md`, numbered sequentially within the chassis (paralleling the `Q{n}-gate.md` convention used in operator workspaces). `blueprints/BLUEPRINT.md` is the index and the source of truth for which blueprints exist and their status — consult it rather than tracking individual blueprints by number here. Gates themselves are never authored in this repo — they live in domain workspaces and reference chassis skills.
 
 ## Anti-pattern awareness
 
@@ -48,5 +46,5 @@ Current state: B1 (chassis architecture) is Draft. B2 (gate orchestrator) is blo
 
 ## Known gaps
 
-- `specs/` directory is empty. The chassis ships the spec convention to other domains but has not yet authored specs for its own skill changes. Tracked in B1.
+- `specs/` contains `queue-lifecycle.md`. The chassis ships the spec convention to other domains but has not yet authored specs for most of its own skill changes. Tracked in B1.
 - The chassis does not accept domain-specific artifacts. Cross-domain findings route through `commons/`; the chassis receives updates as a result (commons ADR-001).

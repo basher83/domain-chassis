@@ -10,7 +10,11 @@ blueprints define.
 | Blueprint | Status | Scope |
 |-----------|--------|-------|
 | [B1-chassis-architecture](B1-chassis-architecture.md) | Draft | Chassis as a whole: current state, component interactions, artifact lifecycle, governance, accumulated changes |
-| B2-gate-orchestrator | Planned | Gate lifecycle automation: supervisor agent, sub-agent dispatches, hook-enforced backpressure. Blocked on B1 |
+| [B2-qmd-architecture](B2-qmd-architecture.md) | Validated | QMD as 3I search infrastructure: system as deployed (v2.1.0), collection scoping, contamination controls |
+
+Planned, not yet filed: gate-orchestrator (gate lifecycle automation — supervisor agent,
+sub-agent dispatch, hook-enforced backpressure; blocked on B1). It takes the next
+sequential number when authored, not a slot reserved here.
 
 ## Convention
 
