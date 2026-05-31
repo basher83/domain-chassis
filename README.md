@@ -13,6 +13,7 @@ Shared operational methodology for all domains. Gate validation lifecycle, sessi
 | gate-work | Execute a gate document checkpoint by checkpoint | Edits Q{n}-gate.md in place, moves to gates/ on clear |
 | prime | Load doctrine, PIN, queue, and triage state | Read-only summary |
 | spec-review | Multi-round structured document review via subagent | Produces findings, no file writes |
+| triage | Articulate the why behind a candidate item and gate it before writing the queue row | Creates Q{n}-why.md and the QUEUE.md row; runs before gate-plan |
 
 ## Commands
 
