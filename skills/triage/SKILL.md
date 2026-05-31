@@ -1,7 +1,7 @@
 ---
 name: triage
 description: Articulates the why behind a candidate queue item — its direction, its named uncertainty, and the conscious scope-carve — and gates it through a cold-context review before writing the QUEUE.md row that the gate lifecycle binds to.
-when_to_use: Use when the user asks to triage an item, add something to the queue, create a queue item or Q-row, intake new work, or articulate intent before scoping (e.g. "triage this", "add X to the queue", "new work item: ..."). Runs before gate-plan — gate-plan binds to the row this produces.
+when_to_use: Use when the user asks to triage an item, add something to the queue, create a queue item or Q-row, intake new work, or articulate intent before scoping.
 ---
 
 # Triage — Why-Articulation and Queue Entry
