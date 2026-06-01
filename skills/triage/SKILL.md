@@ -46,12 +46,12 @@ The review must be cold: it cannot see the elicitation above, or it inherits the
 Run the reviewer with a single `Bash` call, passing the absolute path to `Q{n}-why.md` as the sole argument:
 
 ```bash
-bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-to-Q{n}-why.md>
+NODE_PATH="${CLAUDE_PLUGIN_DATA}/node_modules" bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-to-Q{n}-why.md>
 ```
 
 Do not add arguments, environment variables, or stdin intending to inform the review — the script reads only the artifact at the path, and nothing else reaches the review prompt (an extra positional argument is a hard error). The script's system prompt is the version-controlled review contract: the three probes (under-climb; cold smell-test; direction-vs-destination) and the structured verdict shape. See `scripts/cold-review.ts` and `adrs/ADR-002-triage-cold-review-reviewer.md` for the authoritative probe definitions, the default reviewer model and effort, the `--model` cross-model override, and the fail-closed credential contract.
 
-The script prints a single JSON object — `confidence` (1–4; 5 is unreachable), per-probe `probes` findings, `blocking_deficiencies`, `l3_residue`, and a derived `verdict` — and exits non-zero, emitting no verdict, if it cannot run (missing runtime, missing credential, model error). It requires a one-time `bun install` in the script directory and a Pi-configured credential (`~/.pi/agent`); see ADR-002.
+The script prints a single JSON object — `confidence` (1–4; 5 is unreachable), per-probe `probes` findings, `blocking_deficiencies`, `l3_residue`, and a derived `verdict` — and exits non-zero, emitting no verdict, if it cannot run (missing runtime, missing credential, model error). Its dependencies are installed into the plugin's persistent data dir (`${CLAUDE_PLUGIN_DATA}/node_modules`) by the chassis `SessionStart` hook (`hooks/ensure-reviewer-deps.sh`) and resolved via `NODE_PATH`; a Pi-configured credential (`~/.pi/agent`) is also required. See ADR-002.
 
 ### Step 4 — Verdict Gate (fail-closed)
 
