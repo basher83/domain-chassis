@@ -41,28 +41,30 @@ Write these into `Q{n}-why.md` at the workspace root, following `references/why-
 
 ### Step 3 — Cold Review
 
-The review must be cold: it cannot see the elicitation above, or it inherits the same context that produced the narrowing. Delegate it to a subagent with a fresh context window.
+The review must be cold: it cannot see the elicitation above, or it inherits the same context that produced the narrowing. The cold review is performed by a standalone reviewer script whose **only** interface is the artifact path — the parent cannot pass the Step 2 elicitation, or any other context, into the review even if it tries. That mechanical boundary is what makes the review cold; it replaces the prior fresh-context subagent dispatch, which isolated context but left prompt fidelity to the parent's good behavior.
 
-Dispatch one subagent using the Agent tool, in a single foreground call (do not set `run_in_background`), and block until it returns. Brief it with **only** the absolute path to `Q{n}-why.md` and the instruction to read that file and nothing else — not `QUEUE.md`, not other gates, not this conversation. Do not restate any of the Step 2 elicitation in the briefing. Its entire evidence base is the artifact; that is what makes the review cold.
+Run the reviewer with a single `Bash` call, passing the absolute path to `Q{n}-why.md` as the sole argument:
 
-Instruct the subagent to run three probes against the artifact and return a structured verdict:
+```bash
+bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-to-Q{n}-why.md>
+```
 
-1. **Under-climb probe** — take the stated Direction and try to answer "in service of what?" one rung above it. If a confident answer exists, the operator stopped climbing too low → finding.
-2. **Smell test, read cold** — read the Near-term step alone. Could it reasonably be read as the entire endstate? If yes, the narrowing is silent → finding.
-3. **Direction-vs-destination** — does the Direction name a specific fixed endpoint rather than a vector? If it reads as a destination → finding.
+Do not add arguments, environment variables, or stdin intending to inform the review — the script reads only the artifact at the path, and nothing else reaches the review prompt (an extra positional argument is a hard error). The script's system prompt is the version-controlled review contract: the three probes (under-climb; cold smell-test; direction-vs-destination) and the structured verdict shape. See `scripts/cold-review.ts` and `adrs/ADR-002-triage-cold-review-reviewer.md` for the authoritative probe definitions, the default reviewer model and effort, the `--model` cross-model override, and the fail-closed credential contract.
 
-The subagent returns: a confidence score `N/5` (5 is declared unreachable), the findings from the three probes, and an `L3 residue` note answering "is the scope even right for the actual question?" — recorded as judgment, never as a block.
+The script prints a single JSON object — `confidence` (1–4; 5 is unreachable), per-probe `probes` findings, `blocking_deficiencies`, `l3_residue`, and a derived `verdict` — and exits non-zero, emitting no verdict, if it cannot run (missing runtime, missing credential, model error). It requires a one-time `bun install` in the script directory and a Pi-configured credential (`~/.pi/agent`); see ADR-002.
 
 ### Step 4 — Verdict Gate (fail-closed)
 
-Take the subagent's return and apply the verdict rule:
+If the script exited non-zero, it could not produce a review: **halt**. Do not fabricate a verdict, do not fall back to an in-context review, do not proceed to Step 5 — surface the script's error to the operator. This is the fail-closed boundary.
 
-- A missing or placeholder Direction, fuzz, carve, or revisit trigger is a **blocking deficiency** (structural).
-- **PASS** iff confidence is `4/5` and there are no blocking deficiencies.
-- **FAIL** iff confidence is `≤3/5` or any blocking deficiency exists.
-- The `L3 residue` note is recorded and surfaced to the operator but never changes the verdict — an agent hard-judging "is the scope right for the actual question" is the wrong inhabitant for that seat; the operator is.
+On a zero exit, take the script's JSON output and apply the verdict rule:
 
-Append a `## Cold Review` section to `Q{n}-why.md` (reviewed date, confidence, findings, L3 residue, verdict) per the template.
+- A missing or placeholder Direction, fuzz, carve, or revisit trigger is a **blocking deficiency** (structural) — the script reports these in `blocking_deficiencies`.
+- **PASS** iff `confidence` is `4` (the top of the 1–4 scale; 5 is unreachable) and there are no blocking deficiencies.
+- **FAIL** iff `confidence` is `≤3` or any blocking deficiency exists.
+- The `l3_residue` note is recorded and surfaced to the operator but never changes the verdict — an agent hard-judging "is the scope right for the actual question" is the wrong inhabitant for that seat; the operator is.
+
+The script computes a `verdict` field applying exactly this rule; you may use it directly, but the rule above is authoritative. Append a `## Cold Review` section to `Q{n}-why.md` (reviewed date, confidence, findings, L3 residue, verdict) per the template.
 
 On **FAIL**: report the findings to the operator, let them revise the why-artifact's core, and re-run Step 3. This is fail-closed — do not proceed to Step 5 on an unresolved FAIL or on ambiguity about any condition.
 
