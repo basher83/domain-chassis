@@ -5,6 +5,9 @@ Structure for gate documents. Gates are production validation plans — they def
 ## Structure
 
 ```markdown
+---
+verdict: pending
+---
 # Q{n} Gate: {title}
 
 {Completion criteria — one paragraph. What can the operator claim when this gate clears? This paragraph is the soul of the gate. Every checkpoint below must serve this claim. If clearing all checkpoints wouldn't justify this paragraph, the gate is incomplete.}
@@ -41,6 +44,14 @@ Builds on: {Q-references to predecessor gates whose load-bearing semantics this 
 ## Conventions
 
 **Title**: `Q{n} Gate: {descriptive title}`. The Q-number matches QUEUE.md.
+
+**Machine-readable review header (frontmatter)**: A gate's *current-state* review signal lives in a YAML frontmatter block at the very top of the file — not in the `## Gate Review` prose. The frontmatter is the single fixed-position signal gate-work's fail-closed detector reads, with a position-anchored read of one key; the `## Gate Review` section (see below) is the append-only human review log, and the detector never reads it. This convention is scoped to the current-state verdict the detector keys on — it is not a mandate that every gate field become machine-readable. The format contract is recorded in `${CLAUDE_PLUGIN_ROOT}/adrs/ADR-004-machine-readable-review-header.md`.
+
+- `verdict:` — the current-state verdict: `pending` (planned and not yet passed review, or under re-review), `pass`, or `fail`. gate-plan authors a new gate with `verdict: pending`; gate-review overwrites it to `pass`/`fail` on each (re-)review; gate-work reads only this key. `pass` admits entry and clearance; `fail`/`pending` halts pending a passing review; an **absent** frontmatter block or `verdict:` key means the gate predates this contract — gate-work halts loud and routes to migration, with no body-grep fallback. A re-reviewed gate's superseded verdicts stay in the `## Gate Review` log unedited; only this field carries the operative current-state, so no hand-relabel of the log is needed.
+- `reviewed:` (added by gate-review) — the review timestamp as a UTC-canonical `Z` value (`YYYY-MM-DDThh:mm:ssZ`) sourced from `${CLAUDE_PLUGIN_ROOT}/skills/_shared/now.mjs` (ADR-001). A bare date, a numeric `+0000`/`+00:00` offset, or any local-basis value is rejected.
+- `confidence:` (added by gate-review) — the review confidence as a bare integer enum 1–4. 5 is unreachable per gate-review's confidence scale; a legacy `high` or `n/5` form is rejected. It is bound to `verdict` by the invariant `verdict: pass` iff `confidence` is 4, and `verdict: fail` iff `confidence` is 1–3 — which, because gate-review's scale defines confidence 4 as "minor findings only" (no blocking deficiency) and 1–2 as the blocking-deficiency band, transitively enforces gate-review's PASS-iff-no-blocking-deficiency / FAIL-iff-a-blocking-deficiency rule without a narrative scan. Recorded in `${CLAUDE_PLUGIN_ROOT}/adrs/ADR-005-confidence-enum-and-invariant.md`.
+
+The deterministic checker `${CLAUDE_PLUGIN_ROOT}/skills/gate-review/scripts/check-review-header.py` enforces this header — frontmatter-matches-log verdict, the confidence enum, the verdict↔confidence invariant, and the `Z` `reviewed` format — returning the verdict as an exit code (the same exit-code-as-verdict ethos as `check-citations.py`). Each field's checks are conditional on the field's presence, so a gate migrated for `verdict` only is not retroactively required to carry `reviewed`/`confidence`.
 
 **Completion criteria**: First paragraph after the title. Always present. States what success means in concrete terms — not "validate the system works" but "E2E validation of X as a production Y." A practitioner should be able to read this paragraph and know exactly what the gate proves.
 
@@ -103,6 +114,6 @@ These are not part of the initial gate template. They emerge during the work.
 
 **Notes**: Edge cases, observations, and context discovered during execution that don't fit into checkpoints.
 
-**Gate Review**: Added by gate-review after auditing the document. Contains a `Reviewed:` date, a `Verdict:` (PASS or FAIL), and a summary. Gate-work's pre-clear detector requires this section with `Verdict: PASS` before the gate can clear.
+**Gate Review**: Added and appended by gate-review after auditing the document — the **append-only review log**. Each (re-)review appends a block (its `Reviewed:` / `Verdict:` / `Confidence:` prose and findings); earlier blocks are retained unedited, so the FAIL → fix → re-review → PASS arc is preserved in-file. This section is human narrative; gate-work's pre-clear detector does **not** read it. The machine-readable current-state the detector reads is the frontmatter `verdict:` field (see *Machine-readable review header* above), which gate-review overwrites to match the latest review. A `## Gate Review` log that carries a superseded `Verdict: FAIL` alongside the operative `Verdict: PASS` no longer endangers clearance — the detector reads the frontmatter, not the log.
 
 **Gate Status**: Added when the gate clears. Format: `## Gate Status: CLEARED` followed by validation date and a summary sentence stating what was proven.
