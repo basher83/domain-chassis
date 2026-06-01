@@ -10,6 +10,11 @@ Structure for gate documents. Gates are production validation plans — they def
 {Completion criteria — one paragraph. What can the operator claim when this gate clears? This paragraph is the soul of the gate. Every checkpoint below must serve this claim. If clearing all checkpoints wouldn't justify this paragraph, the gate is incomplete.}
 
 Depends on: {Q-references to prior gates, or "None"}
+Builds on: {Q-references to predecessor gates whose load-bearing semantics this gate reuses, or "None"}
+
+## Inherited from {predecessor}
+
+{Present only when `Builds on:` is non-None. Transcribes the load-bearing fraction — the runtime, fixtures, contracts, or baseline values the successor actually reuses — so a cold gate-work executor reaches it from this single file without opening the predecessor.}
 
 ## Phase 1: {name}
 
@@ -40,6 +45,10 @@ Depends on: {Q-references to prior gates, or "None"}
 **Completion criteria**: First paragraph after the title. Always present. States what success means in concrete terms — not "validate the system works" but "E2E validation of X as a production Y." A practitioner should be able to read this paragraph and know exactly what the gate proves.
 
 **Depends on**: Cross-references to gates that must clear first. Uses Q-numbers. If no dependencies, state "None".
+
+**Builds on** (a.k.a. **Inherits from**): Cross-references to predecessor gate(s) whose load-bearing semantics — runtime, fixtures, contracts, or baseline values — this gate *reuses*. Distinct from `Depends on:`, which names gates that must *clear first*: a gate may build on a cleared predecessor it does not depend on (Q70 builds on the cleared Q66 while its `Depends on:` reads "None"). Uses Q-numbers; if the gate reuses no predecessor's load-bearing semantics, state "None". When `Builds on:` is non-None, the gate must carry a matching `## Inherited from {predecessor}` section.
+
+**Inherited from {predecessor}** (conditional section): Present when — and only when — `Builds on:` is non-None. It transcribes the *load-bearing fraction* of the predecessor (the runtime, fixtures, contracts, or baseline values the successor actually reuses), not the whole predecessor, so a cold `gate-work` executor reaches that context from the single file it loads without opening the predecessor. The heading names the predecessor (`## Inherited from Q66`). Presence of this section against a non-None `Builds on:` is enforced by the deterministic checker `check-inheritance.py`, run from gate-plan (authoring self-check) and gate-review (verdict input); the checker enforces section presence and predecessor-name match, not transcription completeness or correctness — that remains gate-review's judgment.
 
 **Phases**: Numbered sequentially. Names describe the phase's purpose. The number of phases is gate-specific — use as many as needed, no more.
 
