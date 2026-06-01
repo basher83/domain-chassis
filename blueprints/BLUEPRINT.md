@@ -11,10 +11,7 @@ blueprints define.
 |-----------|--------|-------|
 | [B1-chassis-architecture](B1-chassis-architecture.md) | Draft | Chassis as a whole: current state, component interactions, artifact lifecycle, governance, accumulated changes |
 | [B2-qmd-architecture](B2-qmd-architecture.md) | Validated | QMD as 3I search infrastructure: system as deployed (v2.1.0), collection scoping, contamination controls |
-
-Planned, not yet filed: gate-orchestrator (gate lifecycle automation — supervisor agent,
-sub-agent dispatch, hook-enforced backpressure; blocked on B1). It takes the next
-sequential number when authored, not a slot reserved here.
+| [B3-gate-loop-pi-extension](B3-gate-loop-pi-extension.md) | Draft | Gate lifecycle as a Pi extension: `currentPhase()` fold over gate-file state, two-layer transition gate (deterministic checkers + cold judge), file-as-truth, FAIL-convergence constraint. Pi-native recomposition of the retired Q33 gate-orchestrator; softened dependency on B1's gate-file artifact contract |
 
 ## Convention
 
