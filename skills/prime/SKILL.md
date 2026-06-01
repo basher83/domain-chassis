@@ -22,7 +22,7 @@ Read `PIN.md` at the workspace root — the project index tracking what's here a
 
 List the subdirectories in the workspace root to cross-reference against PIN.md entries. Exclude `gates/` — that's the gate archive, not a project. Validate PIN.md against the [workspace standard](references/workspace-standard.md). Flag stale status values, PIN.md entries without a directory on disk, or directories on disk without PIN.md entries. Don't block on these — report them as part of the summary.
 
-List files at the workspace root (not subdirectories). The expected set is: the domain doctrine file, PIN.md, QUEUE.md, TRIAGE.md, and any active gate files matching `Q*-gate.md`. Flag any file not in this set as unexpected — it may be an orphaned artifact, an uncleared gate that wasn't moved to `gates/`, or scratch work that should be filed or removed. Report unexpected files as part of the summary alongside any directory mismatches. Don't block on these.
+List files at the workspace root (not subdirectories). The expected set is: the domain doctrine file, PIN.md, QUEUE.md, TRIAGE.md, the workspace agent-instruction file `CLAUDE.md` (or its `AGENTS.md` sibling) if the workspace carries one, any active gate files matching `Q*-gate.md`, and any frozen intent records matching `Q*-why.md` — the transient, Q-keyed record a triage freezes, present at root during an item's life and parallel to `Q*-gate.md`. Flag any file not in this set as unexpected — it may be an orphaned artifact, an uncleared gate that wasn't moved to `gates/`, or scratch work that should be filed or removed. Report unexpected files as part of the summary alongside any directory mismatches. Don't block on these.
 
 ### Step 3 — Load Queue
 

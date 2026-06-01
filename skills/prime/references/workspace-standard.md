@@ -21,6 +21,8 @@ Every domain workspace has four files at its root:
 | `QUEUE.md` | Operational intent — what's being worked on and what's next |
 | `TRIAGE.md` | Raw intake — unprocessed items awaiting triage |
 
+A workspace root may also carry a `CLAUDE.md` (or its `AGENTS.md` sibling) — the Claude Code agent-instruction file — when the workspace provides agent guidance. It is not one of the four core state files above and is not assumed present in every domain; where a workspace does carry one, it is a recognized, expected root file, not an orphan.
+
 ## PIN.md — Project Index
 
 PIN.md is the workspace routing table. It answers "what's here and what state is it in" for both the operator and the prime skill.
@@ -106,6 +108,10 @@ Gate documents (`Q{n}-gate.md`) are validation specs tied to QUEUE.md items. The
 Active gates live at the workspace root while being worked. When a gate clears (gate-work adds `## Gate Status: CLEARED`), move the file to `gates/` at the workspace root. The `gates/` directory is the archive of completed validation records.
 
 Gate files are operational records, not knowledge artifacts. They live and die with the workspace. When a workspace is condensed, gate files are disposable — the knowledge they validated persists in the work itself (committed code, deployed infrastructure, published tools).
+
+## Why Files — Frozen Intent Records
+
+Intent records (`Q{n}-why.md`) capture *why* a queue item exists — its direction, named uncertainty, and deliberate scope-carve — frozen by triage and tied to a QUEUE.md item. Like gate files, they are transient, Q-keyed artifacts: a `Q{n}-why.md` parallels `Q{n}-gate.md`, living at the workspace root while its queue item is active rather than being a permanent workspace file. They are recognized at root as expected artifacts, not orphans — the same standing as an active `Q{n}-gate.md`, not a fifth row in the core-files table above.
 
 ## Workspace Hygiene
 
