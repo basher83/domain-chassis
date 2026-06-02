@@ -84,11 +84,11 @@ The row is now ready for gate-plan.
 
 ## Related Skills
 
-- **gate-plan** — Binds to the QUEUE.md row triage produces; reads its intent, scope, and next. Triage creates the row; gate-plan expands it into a gate.
+- **gate-plan** — Binds to the QUEUE.md row triage produces; reads its intent, scope, and next, and reads the frozen `Q{n}-why.md` alongside it (gate-plan Step 1) to author against the frozen direction and carve. Triage creates the row and the why-record; gate-plan expands them into a gate.
 - **prime** — Loads session context including `QUEUE.md` and `TRIAGE.md`. Triage creates the rows prime later summarizes; prime never creates them.
 - **aar** — At close, the frozen `Q{n}-why.md` is the canonical intended-outcome record the after-action diff compares against, rather than operator memory. Wiring aar's "Expectations vs Reality" to read it is a separate one-line delta to the aar skill.
 
 ## Reference Files
 
 - **`references/why-template.md`** — Structural template for the why-artifact: the operator-authored core and the appended cold-review section.
-- **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/SKILL.md`** — The next lifecycle step. Triage's output (the QUEUE.md row) is gate-plan's input.
+- **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/SKILL.md`** — The next lifecycle step. Triage's output — the QUEUE.md row plus the frozen `Q{n}-why.md` — is gate-plan's input (gate-plan Step 1 reads both).
