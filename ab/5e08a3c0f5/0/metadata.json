@@ -1,0 +1,114 @@
+{
+  "cli_version": "0.7.3",
+  "checkpoint_id": "ab5e08a3c0f5",
+  "session_id": "77a96514-ffd5-4bb3-8ccd-1b9c29241bbd",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-03T06:35:34.590322Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "templates/ADR-template.md",
+    "templates/Proposal-template.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-8[1m]",
+  "turn_id": "437c8e71a57c",
+  "checkpoint_transcript_start": 52,
+  "transcript_lines_at_start": 52,
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 1265,
+    "cache_read_tokens": 76449,
+    "output_tokens": 416,
+    "api_call_count": 2
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "claude-skill-toolu_01GbuHnyvd41kLGRoy9fEEEg",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "chassis-release"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "437c8e71a57c",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 23,
+        "end": 24,
+        "entry_ids": [
+          "f9b9b1ca-d1ab-4682-9462-b98d78f226e4"
+        ],
+        "tool_use_id": "toolu_01GbuHnyvd41kLGRoy9fEEEg"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01GbuHnyvd41kLGRoy9fEEEg"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: chassis-release",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_01AnhBcAWF4Y1ADPHqSxQ27s",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "git-workflow:git-commit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "437c8e71a57c",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 51,
+        "end": 52,
+        "entry_ids": [
+          "f8b61036-0464-4730-bea6-65831fe21b8d"
+        ],
+        "tool_use_id": "toolu_01AnhBcAWF4Y1ADPHqSxQ27s"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01AnhBcAWF4Y1ADPHqSxQ27s"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: git-workflow:git-commit",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-03T06:35:34.587663Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 2148,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2148,
+    "total_lines_changed": 2275,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
