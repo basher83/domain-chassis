@@ -13,7 +13,14 @@ When writing or editing a chassis `SKILL.md`, command, or skill reference file, 
   - Right: `` see `${CLAUDE_PLUGIN_ROOT}/foundation/EVIDENCE.md` ``
   - Wrong: `` see `foundation/EVIDENCE.md` `` · `` see `../../foundation/EVIDENCE.md` ``
 - **Shell commands → `${CLAUDE_PLUGIN_ROOT}` for any executable**, since the shell resolves against CWD, not the skill root: `${CLAUDE_PLUGIN_ROOT}/skills/gate-review/scripts/check-citations.py`.
-- The variable is **`${CLAUDE_PLUGIN_ROOT}`**. `${CLAUDE_PLUGIN_DIR}` does not exist; `${CLAUDE_SKILL_DIR}` is shell-only and different. Do not substitute.
+- **Writable / runtime-provisioned state → `${CLAUDE_PLUGIN_DATA}`, never `${CLAUDE_PLUGIN_ROOT}`.** The plugin root is read-only at runtime; anything a bundled script must *write*, or that is *provisioned at runtime* (installed deps, caches), lives in the plugin's data dir. The triage `cold-review.ts` invocation is the reference — the script is *read* from `${CLAUDE_PLUGIN_ROOT}` while its deps are installed to `${CLAUDE_PLUGIN_DATA}/node_modules` by a `SessionStart` hook and found via `NODE_PATH`:
+
+  ```bash
+  NODE_PATH="${CLAUDE_PLUGIN_DATA}/node_modules" bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-arg>
+  ```
+
+  Do **not** "simplify" such an invocation by stripping the `NODE_PATH=…${CLAUDE_PLUGIN_DATA}/node_modules` prefix — the deps live *only* there, so removing it breaks every install (`gates/Q70-gate.md` Excluded; confirmed by the Q66 `0.4.1` fix and an in-vivo delivery test, after the "NODE_PATH is spurious" hypothesis was rejected).
+- The variables are **`${CLAUDE_PLUGIN_ROOT}`** (read-only plugin content) and **`${CLAUDE_PLUGIN_DATA}`** (writable/persistent plugin data). `${CLAUDE_PLUGIN_DIR}` does not exist; `${CLAUDE_SKILL_DIR}` is shell-only and different. Do not substitute one for another.
 
 A bare doctrine-name citation in prose (e.g. "the principle `EVIDENCE.md` describes") is not a read pointer and stays prose. The trigger is a path *served as a read pointer*: a `/`-containing path in a code span, a markdown link target, or a "see/read X" instruction.
 
