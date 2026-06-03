@@ -122,6 +122,28 @@ Concrete next steps with clear ownership:
 
 Each action item should be specific enough to become a task or commit. Action items are interpretation — they are recommendations derived from analysis, not factual records.
 
+### Gate-Verdict Calibration & Requirement Attribution — interpretation (gate-closure AARs only)
+
+This section fires **only** when the AAR reviews a closed gate — one that went through `gate-review` (so there is a predicted verdict to score) and reached a lived outcome (CLEARED, with any errata / re-reviews). For AARs of non-gate work, or work with no `gate-review` verdict, skip it entirely; the AAR is unchanged. This conditionality keeps the measurement off every retrospective the chassis serves across the four domains — it is not universalized onto every AAR.
+
+When it fires, emit two measurements, following the schema, requirement-key registry, classification taxonomy, and placement rationale in [references/attribution-ledger.md](references/attribution-ledger.md):
+
+- **Verdict-calibration** — read `gate-review`'s predicted verdict from the gate's frontmatter review header (`verdict:` / `confidence:`) and score it against the lived `gate-work` outcome (CLEARED status, `## Gate Errata`, re-review history). Record predicted-vs-lived and whether they agree (accurate / optimistic / pessimistic). Calibration reads observable fields, so it is self-authored without cold treatment.
+- **Requirement-attribution** — for each quality-bar requirement that applied to the gate (the `GP-*` / `GR-Qnn` keys in the registry), classify it `load-bearing` / `inert` / `absent-but-needed` / `indeterminate`, and anchor every non-`indeterminate` classification to a checkable locus (a gate checkpoint ID, a `gate-work` event, a `## Gate Errata` entry, an AAR finding). `indeterminate` is the honest verdict when the evidence does not support a classification — never manufacture one.
+
+Write the attribution as a fenced ledger block exactly per the reference schema, so the derive-script can extract it deterministically:
+
+```text
+<!-- ledger:begin gate=Q{n} date=YYYY-MM-DD -->
+**Calibration.** Predicted: `pass` @ confidence N (reviewed ...Z). Lived: CLEARED ...Z, K errata, M re-reviews. Verdict-calibration: **accurate|optimistic|pessimistic** — ...
+| requirement_key | requirement | source | classification | locus |
+|-----------------|-------------|--------|----------------|-------|
+| GR-Q02 | every method a positive artifact | gate-review Q2 | load-bearing | <checkable locus> |
+<!-- ledger:end -->
+```
+
+**Self-authored, made safe structurally (the A4 decision).** The attribution is authored by you, the AAR agent — not handed to a cold pass — because the locus-anchoring makes each classification checkable rather than narratable, and `indeterminate` removes the pressure to manufacture a verdict. The heavier cold guard is reserved for the irreversible action: the prune *decision* at pruning-review time, the operator's call, downstream of any single AAR. Both measurements are **interpretation** and belong in the interpretation artifact (the `.md`), never the `.evidence.md` record.
+
 ## Phase 3: Write the AAR
 
 Write two files to the domain knowledge repo's aar directory. The evidence record captures factual data. The AAR captures interpretation that references the evidence record.
@@ -211,6 +233,16 @@ Template:
 
 The AAR is interpretation. It analyzes, concludes, and recommends. It references the evidence record for factual grounding — a reader who wants to verify a claim follows the Evidence link. The AAR does not duplicate the commit table, artifact list, or timeline from the evidence record.
 
+### Refresh the derived ledger (gate-closure AARs only)
+
+After writing the attribution block into the interpretation artifact, regenerate the cross-gate ledger snapshot so it reflects the new entry. The snapshot is a **derived projection** of the AAR tables — never hand-edited; regenerate it and it is correct by construction (so it cannot drift from its source):
+
+```bash
+${CLAUDE_PLUGIN_ROOT}/skills/aar/scripts/ledger.py derive ${DOMAIN_REPO}/aar/ --scope {domain} --out ${DOMAIN_REPO}/aar/ledger-{YYYY-MM-DD}.tsv
+```
+
+Commit the refreshed snapshot alongside the AAR (Phase 5). The snapshot is the source the operator-run pruning review reads (`ledger.py prune-review <snapshot> --threshold N`); it surfaces a requirement as a prune candidate once its inert streak meets the threshold. The prune *decision* — removing a requirement from the bar — applies cold scrutiny and is the operator's, taken across domains' snapshots, never on one gate's observation.
+
 ## Phase 4: Cross-Reference
 
 Check if any lessons or action items should propagate to:
@@ -233,7 +265,12 @@ git commit -m "aar: {project} — {brief-description}"
 git push
 ```
 
-Both files are committed together — the evidence record and interpretation are a pair. If the domain knowledge repo could not be resolved in the earlier step and the AAR was written to the workspace root, remind the operator to file it.
+Both files are committed together — the evidence record and interpretation are a pair. For a gate-closure AAR, add the refreshed ledger snapshot to the same commit (`git add aar/ledger-{YYYY-MM-DD}.tsv`). If the domain knowledge repo could not be resolved in the earlier step and the AAR was written to the workspace root, remind the operator to file it.
+
+## Reference Files
+
+- **[references/attribution-ledger.md](references/attribution-ledger.md)** — the gate-verdict loop: attribution-table schema, derived-snapshot schema, the requirement-key registry, the classification taxonomy + streak semantics, the self-vs-cold attribution decision, and the `foundation/EVIDENCE.md` placement rationale. Read when emitting the gate-closure calibration/attribution section.
+- **`scripts/ledger.py`** — derives the cross-gate snapshot from AAR attribution tables (`derive`) and surfaces prune candidates from a snapshot (`prune-review`). Invoked via `${CLAUDE_PLUGIN_ROOT}/skills/aar/scripts/ledger.py`.
 
 ## Related Skills
 
