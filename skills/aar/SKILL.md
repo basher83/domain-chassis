@@ -8,7 +8,7 @@ when_to_use: Use when the user asks to do an AAR, after-action review, retrospec
 
 Structured retrospective analysis of a completed work session. The AAR captures what specs, gates, and plans miss: what actually happened, where friction occurred, and what to change next time.
 
-The AAR produces two artifacts: an evidence record (structured, factual, verifiable) and an interpretation document (narrative analysis, lessons, recommendations). These are separate files. A downstream consumer can read the evidence record without encountering interpretation, and vice versa. This separation is a chassis-level requirement — see `foundation/EVIDENCE.md` for the doctrine and provenance.
+The AAR produces two artifacts: an evidence record (structured, factual, verifiable) and an interpretation document (narrative analysis, lessons, recommendations). These are separate files. A downstream consumer can read the evidence record without encountering interpretation, and vice versa. This separation is a chassis-level requirement — see `${CLAUDE_PLUGIN_ROOT}/foundation/EVIDENCE.md` for the doctrine and provenance.
 
 You (the main agent) drive the analysis. You sat through the session or have been primed with the project state. The AAR's value is in connecting observations to methodology decisions — identifying which skill, process, or configuration change would have changed the outcome. That's judgment work that requires your context.
 
@@ -269,7 +269,7 @@ Both files are committed together — the evidence record and interpretation are
 
 ## Reference Files
 
-- **[references/attribution-ledger.md](references/attribution-ledger.md)** — the gate-verdict loop: attribution-table schema, derived-snapshot schema, the requirement-key registry, the classification taxonomy + streak semantics, the self-vs-cold attribution decision, and the `foundation/EVIDENCE.md` placement rationale. Read when emitting the gate-closure calibration/attribution section.
+- **[references/attribution-ledger.md](references/attribution-ledger.md)** — the gate-verdict loop: attribution-table schema, derived-snapshot schema, the requirement-key registry, the classification taxonomy + streak semantics, the self-vs-cold attribution decision, and the `${CLAUDE_PLUGIN_ROOT}/foundation/EVIDENCE.md` placement rationale. Read when emitting the gate-closure calibration/attribution section.
 - **`scripts/ledger.py`** — derives the cross-gate snapshot from AAR attribution tables (`derive`) and surfaces prune candidates from a snapshot (`prune-review`). Invoked via `${CLAUDE_PLUGIN_ROOT}/skills/aar/scripts/ledger.py`.
 
 ## Related Skills

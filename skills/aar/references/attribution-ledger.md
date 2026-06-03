@@ -8,7 +8,7 @@ The loop has three parts and a strict source-vs-derived split:
 - **Derived projection** — a cross-gate **snapshot** (`ledger-*.tsv`), produced *only* by `scripts/ledger.py derive` reading the AAR tables. Never hand-edited. Regenerable, so it cannot drift from its source.
 - **Consumer** — `scripts/ledger.py prune-review` reads the latest snapshot and surfaces a requirement as a prune candidate when its inert streak meets a threshold.
 
-## Why a derived projection (placement against `foundation/EVIDENCE.md`)
+## Why a derived projection (placement against `${CLAUDE_PLUGIN_ROOT}/foundation/EVIDENCE.md`)
 
 The per-gate calibration and attribution are **interpretation** — judgments about what a gate's outcome means for the bar. They live in the AAR interpretation artifact, at origin, exactly where `EVIDENCE.md` says interpretation lives. They are never written to the `.evidence.md` record.
 
