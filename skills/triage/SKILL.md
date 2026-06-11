@@ -16,15 +16,19 @@ The operator brings a candidate piece of work — a near-term step they can alre
 
 ## Process
 
-### Step 1 — Resolve the Next Q-number
+### Step 0 — Bind the Input
 
-The Q-number is a stable identifier pinned to the item for its lifetime; retired numbers are never reassigned. No ledger exists, so compute the next number from the durable record on disk:
+Triage's input is not a parameter sitting where this skill's body can see it. The harness appends it as an `ARGUMENTS` block *after* this skill's body — that trailing block is the operator's articulation described in `## Input` above: the candidate piece of work and the durable-vision pointer Step 2 climbs from. Read that block as the substrate of the whole triage, not as optional flags. If no `ARGUMENTS` block was appended — the skill was invoked bare — do not proceed against an empty input or invent a candidate: elicit the articulation from the operator (the near-term step and the vision it serves) before Step 1.
 
-1. Read `QUEUE.md` at the workspace root (live rows).
-2. List `Q{n}-*.md` at the workspace root (active gates and any prior why-artifacts) and in `gates/` (the cleared archive).
-3. The next number is `max(all Q-numbers in that union) + 1`. State the proposed number to the operator before using it.
+### Step 1 — Scaffold the Why-Draft
 
-Known hazard: `max + 1` is collision-proof only for numbers that left a durable artifact. A number retired *without* ever producing a `Q{n}-*.md` file leaves no trace, so if the current-highest item were retired that way, `max + 1` could recompute it and violate "never reassigned." The `Q{n}-why.md` this skill writes (Step 2) closes that gap going forward — every triaged number now leaves a record — but for numbers retired before triage existed, the operator's confirmation of the proposed number is the backstop. If the operator flags the proposed number as a known retiree, increment past it.
+No Q-number is minted yet. The number is a stable identifier pinned for the item's lifetime, and it is assigned only at commit (Step 5) — the first moment the item is certain to become a queue row — so work that may never reach a row never claims a number. Scaffold the why-draft now, under a slug name, with the deterministic script (run from the workspace root):
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/next-q.mjs scaffold
+```
+
+It writes `Q-draft-{slug}-why.md` at the workspace root from `references/why-template.md` — the operator-authored core, `Intent version: v0`, and a blank `Frozen:`. The script is `now.mjs`-shaped: plain `node`, dependency-free, no bun, no `NODE_PATH`, no credential. The slug-named draft claims no number by construction — a `Q-draft-…` name has a non-digit after `Q`, so the Step-5 `max(Q[0-9]+)+1` computation cannot see it, and an abandoned triage leaves no number-claiming orphan.
 
 ### Step 2 — Articulate the Why
 
@@ -37,16 +41,16 @@ Elicit from the operator, climbing from where their sight is strongest. Do not s
 5. **The carve** — the conscious narrowing: "scoping the first work to X, against the larger shape; if that read is wrong, this forecloses ___."
 6. **Revisit trigger** — the concrete checkpoint where intent gets re-derived once the work surfaces what was not visible now. Not "later."
 
-Write these into `Q{n}-why.md` at the workspace root, following `references/why-template.md`. Do not set the `Frozen:` date yet — that is set at PASS in Step 4.
+Write these into the `Q-draft-{slug}-why.md` scaffold from Step 1, following `references/why-template.md`. Do not set the `Frozen:` date — the commit step (Step 5) stamps it at PASS.
 
 ### Step 3 — Cold Review
 
 The review must be cold: it cannot see the elicitation above, or it inherits the same context that produced the narrowing. The cold review is performed by a standalone reviewer script whose **only** interface is the artifact path — the parent cannot pass the Step 2 elicitation, or any other context, into the review even if it tries. That mechanical boundary is what makes the review cold; it replaces the prior fresh-context subagent dispatch, which isolated context but left prompt fidelity to the parent's good behavior.
 
-Run the reviewer with a single `Bash` call, passing the absolute path to `Q{n}-why.md` as the sole argument:
+Run the reviewer with a single `Bash` call, passing the absolute path to the `Q-draft-{slug}-why.md` draft as the sole argument:
 
 ```bash
-NODE_PATH="${CLAUDE_PLUGIN_DATA}/node_modules" bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-to-Q{n}-why.md>
+NODE_PATH="${CLAUDE_PLUGIN_DATA}/node_modules" bun ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/cold-review.ts <abs-path-to-Q-draft-{slug}-why.md>
 ```
 
 Do not add arguments, environment variables, or stdin intending to inform the review — the script reads only the artifact at the path, and nothing else reaches the review prompt (an extra positional argument is a hard error). The script's system prompt is the version-controlled review contract: the three probes (under-climb; cold smell-test; direction-vs-destination) and the structured verdict shape. See `scripts/cold-review.ts` and `${CLAUDE_PLUGIN_ROOT}/adrs/ADR-002-triage-cold-review-reviewer.md` for the authoritative probe definitions, the default reviewer model and effort, the `--model` cross-model override, and the fail-closed credential contract.
@@ -64,21 +68,27 @@ On a zero exit, take the script's JSON output and apply the verdict rule:
 - **FAIL** iff `confidence` is `≤3` or any blocking deficiency exists.
 - The `l3_residue` note is recorded and surfaced to the operator but never changes the verdict — an agent hard-judging "is the scope right for the actual question" is the wrong inhabitant for that seat; the operator is.
 
-The script computes a `verdict` field applying exactly this rule; you may use it directly, but the rule above is authoritative. Append a `## Cold Review` section to `Q{n}-why.md` (reviewed date, confidence, findings, L3 residue, verdict) per the template.
+The script computes a `verdict` field applying exactly this rule; you may use it directly, but the rule above is authoritative. Append a `## Cold Review` section to the `Q-draft-{slug}-why.md` draft (reviewed date, confidence, findings, L3 residue, verdict) per the template.
 
 On **FAIL**: report the findings to the operator, let them revise the why-artifact's core, and re-run Step 3. This is fail-closed — do not proceed to Step 5 on an unresolved FAIL or on ambiguity about any condition.
 
-### Step 5 — Output (on PASS)
+### Step 5 — Commit (on PASS)
 
-1. Set the `Frozen:` date in `Q{n}-why.md`. The authored core is now the v0 anchor.
-2. Append the row to `QUEUE.md` at the workspace root:
+The number is assigned now — at PASS, the first moment the item is certain to become a queue row. Run the commit half of the script against the draft (from the workspace root):
 
-   ```markdown
-   | Q{n} | {near-term step, imperative} | {project link or domain} | {immediate next action or blocker} |
-   ```
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/skills/triage/scripts/next-q.mjs commit --draft <abs-path-to-Q-draft-{slug}-why.md>
+```
 
-3. Leave `Q{n}-why.md` at the workspace root — it is the durable v0 record (and the retired-number trace from Step 1).
-4. Present a one-line summary: the Q-number assigned, the direction, and the carve.
+It computes `max(Q[0-9]+)+1` over the union of all three durable sources — `QUEUE.md` rows, root `Q{n}-*.md`, and `gates/Q{n}-*.md` — renames the draft to `Q{n}-why.md`, stamps its `Frozen:` line with the UTC instant (the authored core is now the v0 anchor), substitutes the number into the title, and emits a `QUEUE.md` row stub carrying `Q{n}`. The script owns the number and the row; the prose cells are yours.
+
+Numbers are assigned and never reassigned, and the sequence is deliberately allowed to have gaps — a retired or skipped number is simply absent, and non-contiguous Q-numbers are normal, not a defect to close. Because the number is computed at commit over what actually exists on disk (the three sources above), an item that never reaches this step leaves no number behind to collide with; the old `max + 1` collision hazard, and the operator-confirmation backstop it required, are dissolved rather than guarded.
+
+Then:
+
+1. Fill the emitted row's prose cells — `{near-term step, imperative}`, `{project link or domain}`, `{immediate next action or blocker}` — and append the completed row to `QUEUE.md` at the workspace root.
+2. Leave `Q{n}-why.md` at the workspace root — it is the durable v0 record and the on-disk trace that keeps its number from being recomputed.
+3. Present a one-line summary: the Q-number assigned, the direction, and the carve.
 
 The row is now ready for gate-plan.
 
@@ -90,5 +100,6 @@ The row is now ready for gate-plan.
 
 ## Reference Files
 
+- **`scripts/next-q.mjs`** — Deterministic, dependency-free (`now.mjs`-shaped) Q-number resolution and why-draft scaffolding for Steps 1 and 5. `scaffold` mints the slug-named draft (no number); `commit` computes `max(Q[0-9]+)+1` over the three durable sources, renames the draft to `Q{n}-why.md`, and stamps `Frozen:` at PASS.
 - **`references/why-template.md`** — Structural template for the why-artifact: the operator-authored core and the appended cold-review section.
 - **`${CLAUDE_PLUGIN_ROOT}/skills/gate-plan/SKILL.md`** — The next lifecycle step. Triage's output — the QUEUE.md row plus the frozen `Q{n}-why.md` — is gate-plan's input (gate-plan Step 1 reads both).

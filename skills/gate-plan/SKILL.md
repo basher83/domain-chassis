@@ -14,6 +14,10 @@ The operator provides a Q-number (e.g., "Q4", "4"). This maps to a row in QUEUE.
 
 ## Process
 
+### Step 0 — Bind the Input
+
+The Q-number this gate plans against is not a parameter the skill body already holds: the harness appends it as an `ARGUMENTS` block *after* this skill's body. That trailing block is the `## Input` above — read it as the Q-number to plan against, and resolve it against the matching `QUEUE.md` row and the frozen `Q{n}-why.md` in Step 1. This is the binding clause only — gate-plan's Step 1 (Resolve Context) already *consumes* that input, so no further consume-fix is needed, and gate-plan mints no Q-number; it reads one. The clause is here for defect-class consistency with the input-binding discipline applied across the chassis skills, not to repair a drift.
+
 ### Step 1 — Resolve Context
 
 1. Read `QUEUE.md` at the workspace root. Find the row matching the Q-number. Extract the intent, scope, and next action. If the Q-number doesn't exist in the queue, stop and tell the operator. Then, **alongside** the row — not instead of it — read the companion frozen intent record `Q{n}-why.md` at the workspace root when it is present. This is the record triage freezes for the item; it carries the **direction** (where the work points), the named **fuzz** (the conscious uncertainty), the scope-**carve** (what was deliberately cut), and the **revisit-trigger** (the condition that should reopen the decision). Draw on these to author completion criteria that pursue the frozen direction and an Excluded section that honors the carve. The read is best-effort, not a precondition: most live queue items predate triage's freeze and carry no `Q{n}-why.md`, so when the file is absent, proceed on the QUEUE.md row alone — a missing why-record is the normal path, not a halt.
