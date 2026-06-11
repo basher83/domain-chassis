@@ -35,7 +35,7 @@ No qualifiers on status values. `Draft (almost done)` is not valid. If the docum
 
 ### Revision
 
-Free-form but should track meaningful changes. Format: version identifier plus amendment summary when the document has gone through significant iteration.
+Tracks meaningful changes as a semantic version (`MAJOR.MINOR.PATCH`), optionally followed by an amendment summary or milestone note when the document has gone through significant iteration.
 
 Examples: `0.0.1`, `0.0.3 + Amendment 001 (bounded-context execution model)`, `0.1.0 — final pre-gate`.
 
