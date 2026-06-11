@@ -16,7 +16,7 @@ Every domain workspace has four files at its root:
 
 | File | Purpose |
 |------|---------|
-| `{DOMAIN}.md` | Operating doctrine for this domain (FORGE.md, WORKSHOP.md, LAB.md, RESEARCH.md) |
+| `{DOMAIN}.md` | Operating doctrine for this domain — any `{DOMAIN}.md` named for the domain (the 3I domains are `FORGE.md`, `WORKSHOP.md`, `LAB.md`, `RESEARCH.md`; a consumer's own is discovered the same way, e.g. `PERSONAL.md`) |
 | `PIN.md` | Project index — what's here and what state it's in |
 | `QUEUE.md` | Operational intent — what's being worked on and what's next |
 | `TRIAGE.md` | Raw intake — unprocessed items awaiting triage |

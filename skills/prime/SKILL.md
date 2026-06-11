@@ -12,9 +12,9 @@ Read the domain's core files and summarize the current state for the operator.
 
 ### Step 1 — Load Doctrine
 
-Discover the domain's doctrine file at the workspace root. Look for files matching known domain doctrine names: `FORGE.md`, `WORKSHOP.md`, `LAB.md`, `RESEARCH.md`. Read whichever one exists.
+Discover the domain's doctrine file at the workspace root by what distinguishes it from the workspace's recognized structural files — not by matching a fixed list of domain names. The doctrine file is the root-level `.md` file that is *not* one of the known structural files: `PIN.md`, `QUEUE.md`, `TRIAGE.md`, `CLAUDE.md`, `AGENTS.md`, or a transient Q-keyed `Q*-gate.md` / `Q*-why.md`. Whatever root `.md` remains after excluding those is the domain doctrine file — `WORKSHOP.md`, `FORGE.md`, `LAB.md`, and `RESEARCH.md` are the 3I domains, but the rule is name-agnostic: a consumer whose doctrine file is `PERSONAL.md` (or any other `{DOMAIN}.md`) is discovered the same way. Read whichever file the exclusion leaves.
 
-If multiple doctrine files are found, warn the operator — a workspace should belong to exactly one domain. If no doctrine file is found, note its absence and continue with the remaining steps.
+If more than one candidate remains after the exclusion, warn the operator — a workspace should belong to exactly one domain. If no candidate remains, note the doctrine file's absence and continue with the remaining steps.
 
 ### Step 2 — Load Project Index
 
