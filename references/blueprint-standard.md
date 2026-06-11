@@ -8,7 +8,7 @@ The proof of concept is the Range architecture design document, which went throu
 
 ## Location
 
-`blueprint.md` at the project root, next to `specs/`. Git-tracked, versioned through iteration. One blueprint per project. If a project's scope expands enough to warrant a second blueprint, that's a signal the project should decompose.
+`blueprints/B#-<project-name>.md` at the project root, next to `specs/`. Git-tracked, versioned through iteration. One blueprint per project. If a project's scope expands enough to warrant a second blueprint, that's a signal the project should decompose.
 
 ## Frontmatter
 
@@ -18,7 +18,7 @@ Project: <domain>
 Type: <category — what kind of work this is>
 Date: <created date, ISO 8601>
 Status: Draft | Active | Pre-gate | Superseded
-Revision: <version + amendment summary when applicable>
+Revision: <semver>
 ---
 ```
 
@@ -37,7 +37,7 @@ No qualifiers on status values. `Draft (almost done)` is not valid. If the docum
 
 Free-form but should track meaningful changes. Format: version identifier plus amendment summary when the document has gone through significant iteration.
 
-Examples: `v1`, `v3 + Amendment 001 (bounded-context execution model)`, `v14 — final pre-gate`.
+Examples: `0.0.1`, `0.0.3 + Amendment 001 (bounded-context execution model)`, `0.1.0 — final pre-gate`.
 
 ## Sections
 
