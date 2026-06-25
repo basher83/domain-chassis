@@ -1,6 +1,6 @@
 # ADR-001: UTC-Canonical Timestamps in `_shared/now.mjs`
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-05-30T02:38:45Z
 **Authors:** Brent, Claude
 **Reviewers:** Brent

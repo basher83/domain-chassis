@@ -1,6 +1,6 @@
 # ADR-002: Triage Cold-Review as a Standalone Pi-SDK Reviewer
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-06-01T03:35:12Z
 **Authors:** Brent, Claude
 **Reviewers:** Brent

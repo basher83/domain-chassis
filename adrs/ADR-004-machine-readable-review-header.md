@@ -1,6 +1,6 @@
 # ADR-004: Machine-Readable Gate Review Header in Frontmatter
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-06-01T19:22:07Z
 **Authors:** Brent, Claude
 **Reviewers:** Brent

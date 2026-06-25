@@ -1,6 +1,6 @@
 # ADR-005: Gate-Review Confidence Enum and the Verdict↔Confidence Invariant
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-06-01T19:40:11Z
 **Authors:** Brent, Claude
 **Reviewers:** Brent

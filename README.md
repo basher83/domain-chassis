@@ -67,7 +67,11 @@ Chassis-local architecture decisions — cite as `chassis ADR-{n}` to distinguis
 
 | File | Purpose |
 |------|---------|
-| ADR-001-utc-canonical-timestamps.md | Chassis ADR-001: UTC as the canonical timestamp representation (Status: Proposed) |
+| ADR-001-utc-canonical-timestamps.md | UTC as the canonical timestamp representation in `_shared/now.mjs` (Status: Accepted) |
+| ADR-002-triage-cold-review-reviewer.md | Triage cold-review as a standalone Pi-SDK reviewer with argv-only boundary (Status: Accepted) |
+| ADR-003-gate-to-gate-inheritance.md | Gate-to-gate inheritance via `Builds on:` field, gate-plan inlining, and presence checker (Status: Accepted) |
+| ADR-004-machine-readable-review-header.md | Machine-readable gate review header in frontmatter (Status: Accepted) |
+| ADR-005-confidence-enum-and-invariant.md | Gate-review confidence enum and the verdict↔confidence invariant (Status: Accepted) |
 
 ## File Operation Model
 
