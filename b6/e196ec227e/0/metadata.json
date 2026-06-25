@@ -1,0 +1,54 @@
+{
+  "cli_version": "0.7.5",
+  "checkpoint_id": "b6e196ec227e",
+  "session_id": "9d1d8469-8225-4540-b0d1-b48c18359f02",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-25T00:54:41.347115Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "Cursor",
+  "model": "composer-2.5-fast",
+  "turn_id": "7ba0cf4b782a",
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 180,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 369,
+      "user_lines_removed": 5,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 180,
+      "user_added_per_file": {
+        "README.md": 5,
+        "adrs/ADR-001-utc-canonical-timestamps.md": 1,
+        "adrs/ADR-002-triage-cold-review-reviewer.md": 1,
+        "adrs/ADR-004-machine-readable-review-header.md": 1,
+        "adrs/ADR-005-confidence-enum-and-invariant.md": 1,
+        "templates/ADR-template.md": 109,
+        "templates/Proposal-template.md": 71,
+        "templates/adr-template.md": 109,
+        "templates/proposal-template.md": 71
+      },
+      "user_removed_per_file": {
+        "README.md": 1,
+        "adrs/ADR-001-utc-canonical-timestamps.md": 1,
+        "adrs/ADR-002-triage-cold-review-reviewer.md": 1,
+        "adrs/ADR-004-machine-readable-review-header.md": 1,
+        "adrs/ADR-005-confidence-enum-and-invariant.md": 1
+      }
+    }
+  ]
+}
