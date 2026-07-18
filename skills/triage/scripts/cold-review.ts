@@ -55,8 +55,9 @@
  *     a silent skip and never a fall back to in-context dispatch.
  */
 
-import { completeSimple, clampThinkingLevel, type Model, type Api, type ThinkingLevel, type ModelThinkingLevel } from "@earendil-works/pi-ai";
-import { ModelRegistry, AuthStorage } from "@earendil-works/pi-coding-agent";
+import { clampThinkingLevel, type Model, type Api, type ThinkingLevel, type ModelThinkingLevel } from "@earendil-works/pi-ai";
+import { completeSimple } from "@earendil-works/pi-ai/compat";
+import { ModelRegistry, ModelRuntime } from "@earendil-works/pi-coding-agent";
 
 const DEFAULT_MODEL = "anthropic-proxy/claude-sonnet-4-6";
 // Reasoning/effort level for the cold judge. Counterintuitively, MORE reasoning makes
@@ -259,14 +260,22 @@ const main = async (): Promise<void> => {
 
 	const [provider, modelId] = [modelSpec.slice(0, modelSpec.indexOf("/")), modelSpec.slice(modelSpec.indexOf("/") + 1)];
 
-	const auth = AuthStorage.create();
-	const registry = ModelRegistry.create(auth);
+	let registry: ModelRegistry;
+	try {
+		const runtime = await ModelRuntime.create();
+		registry = new ModelRegistry(runtime);
+	} catch (e) {
+		return void die(3, `model registry failed to load (~/.pi/agent/models.json): ${e instanceof Error ? e.message : String(e)}`);
+	}
 	if (registry.getError()) {
 		return void die(3, `model registry failed to load (~/.pi/agent/models.json): ${registry.getError()}`);
 	}
 	const model = registry.find(provider, modelId);
 	if (!model) {
 		return void die(3, `model '${modelSpec}' not found in the Pi registry (~/.pi/agent). Run 'pi' to configure it, or pass --model.`);
+	}
+	if (!registry.hasConfiguredAuth(model as Model<Api>)) {
+		return void die(3, `no usable credential for '${modelSpec}'. Configure auth via 'pi' (~/.pi/agent/auth.json).`);
 	}
 	const resolved = await registry.getApiKeyAndHeaders(model as Model<Api>);
 	if (!resolved.ok) {
