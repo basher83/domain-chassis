@@ -39,19 +39,20 @@ Connects to the vision: {one line tying this direction to the durable vision (Pa
 
 Not part of the operator-authored core. Added by triage's cold-review pass.
 
-**Cold Review**: Written by the triage parent skill from the review subagent's returned verdict. Contains a `Reviewed:` date, a `Confidence: N/5`, the findings from the three probes (under-climb, smell-test-cold, direction-vs-destination), an `L3 residue:` note (recorded, non-blocking), and a `Verdict:` (PASS or FAIL). The row is not written until `Verdict: PASS`. On `Verdict: FAIL`, the operator revises the core above and the review re-runs.
+**Cold Review**: Written by the triage parent skill from the JSON that `scripts/cold-review.ts` returns. Contains a `Reviewed:` date, a `Reviewer:` line naming the model and effort the script reports, a `Confidence: N/4` (the scale is 1–4; 5 is unreachable), the findings from the three probes (under-climb, smell-test-cold, direction-vs-destination), an `L3 residue:` note (recorded, non-blocking), and a `Verdict:` (PASS or FAIL). The row is not written until `Verdict: PASS`. On `Verdict: FAIL`, the operator revises the core above and the review re-runs.
 
 ```markdown
 ## Cold Review
 
 Reviewed: {date}
-Confidence: {N}/5
+Reviewer: {model and effort from the script's output, e.g. `anthropic-proxy/claude-sonnet-4-6`, effort off}
+Confidence: {N}/4
 
 - Under-climb: {finding, or "none — direction holds at the top of the confident climb"}
 - Smell test (cold): {finding, or "none — near-term step does not read as the endstate"}
 - Direction-vs-destination: {finding, or "none — direction reads as a vector"}
 
-L3 residue: {the subagent's read on whether the scope fits the actual question — recorded, not blocking}
+L3 residue: {the reviewer's read on whether the scope fits the actual question — recorded, not blocking}
 
 Verdict: {PASS | FAIL}
 ```
