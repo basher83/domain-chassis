@@ -47,3 +47,21 @@ The attempted successor, `anthropic-proxy/claude-sonnet-5`, cannot reach effort 
 The operator ruled to keep `anthropic-proxy/claude-sonnet-4-6` as the triage cold reviewer's default and record sonnet-5 as calibration-blocked at `minimal`. The more thorough follow-up evaluation is routed outside this gate at `/Users/basher8383/3I/research/prompting-eval-workbench/evals/triage-cold-reviewer-calibration`; results from that workbench will flow back to this decision. No voting mitigation or Q69/B3 redesign is bundled into Q86.
 
 The hand-maintained sonnet-4-6 registry entry remains a load-bearing chassis-external precondition for the shipped default: it must retain `compat.forceAdaptiveThinking: false` so requested effort `off` is honored. The anthropic proxy remains a non-OAuth provider in Pi's registry, so the reviewer supplies temperature 0 on this path. This result is scoped only to **triage's cold reviewer, its three fuzzy probes, these fixtures, and the live sonnet-5 `minimal` floor**; it is not a claim about sonnet-5 or the Claude 5 family as general-purpose judges.
+
+## Pi 1.x Migration (maintenance, 2026-11-02T04:48:28Z)
+
+A maintenance round, not a queued item, moved both reviewer dependencies from `^0.80.10` to `^1.4.0`. `0.80.10` was the last 0.80 release, and `pi-coding-agent@0.80.10` pins `undici@8.5.0`, `glob@13.0.6` and `minimatch@10.2.5` exactly, so `bun audit fix` within the old range could clear only 9 of 34 transitive advisories. On `1.4.0`, after an in-range `bun audit fix`, 9 advisories remain (4 high, 5 moderate). They come from `undici@8.10.2` and `minimatch@10.2.6`, which `pi-coding-agent@1.4.0` itself pins exactly. That residual is upstream-owned. The operator accepted it because the reviewer's only network path is one HTTPS call to the homelab-internal anthropic proxy. Version overrides were deliberately not used.
+
+The reviewer needed no code changes: every import the script uses (`clampThinkingLevel`, `completeSimple` from `pi-ai/compat`, `ModelRegistry`, `ModelRuntime`) resolves on 1.4.0 with no deprecation markers. The same Q86 battery was re-run on 1.4.0, with dependencies installed by the provisioning hook itself and the script run from a directory where nothing nearer could shadow `NODE_PATH`:
+
+- **Prompt boundary:** the `--print-prompt` hash is byte-identical with adversarial environment variables and stdin injected, and an extra positional argument fails with exit 2.
+- **Fail-closed exits:** an unknown model and a model with no credential both exit 3, and a missing artifact exits 2. None of these emits a verdict.
+- **Effort off:** a direct completion probe showed `claude-sonnet-4-6` at `off` returns text blocks only. As a positive control, `claude-sonnet-5` clamps to `minimal` and returns a thinking block.
+- **Delivery hook:** seeded with the pre-bump manifest, the hook installed `1.4.0` into scratch plugin data, and a second traced run took the no-op branch.
+- **Calibration at the default** (`anthropic-proxy/claude-sonnet-4-6`, `off`, every run on that model and effort):
+  - The neutral clean fixture was `5/5 PASS@4`.
+  - The degraded fixture was `5/5 FAIL@1`, with all three probes firing and its planted gaps listed.
+  - The cold-stripped Q66, Q67, Q69 and Q70 cores were `20/20 PASS@4` with zero flicker.
+  - The hollow-carve fixture was `FAIL@2` on every run. Its `smell_test` firing rate was attributed by a same-session paired run on the pre-bump `0.80.10` install: over 15 runs each, `smell_test` fired 12/15 on 1.4.0 and 14/15 on 0.80.10, and the verdict was `FAIL@2` on all 30. The probe's occasional silence on this fixture occurs on both runtimes, so it is a property of the fixture, not of the bump. The verdict itself never flickered.
+
+The sonnet-4-6 registry precondition (`compat.forceAdaptiveThinking: false`) still holds and remains load-bearing on 1.x. The scope matches Q86: triage's cold reviewer, its three probes and these fixtures only.
